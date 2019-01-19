@@ -17,7 +17,7 @@ class User(db.Model):
     telephone = db.Column(db.Integer)
     email = db.Column(db.String(64))
     flag = db.Column(db.Integer)  # 0 用户 1 商家
-    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
 
@@ -30,7 +30,7 @@ class Address(db.Model):
     phone = db.Column(db.Integer)
     address = db.Column(db.String(255))
     detail = db.Column(db.Text)
-    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
     user = db.relationship("User", backref="address", lazy="dynamic")
 
@@ -53,7 +53,7 @@ class UserSafe(db.Model):
     question2 = db.Column(db.String(255))
     answer1 = db.Column(db.String(255))
     answer2 = db.Column(db.String(255))
-    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
     user = db.relationship("User", backref="safe", lazy="dynamic")
 
@@ -65,8 +65,6 @@ class Vip(db.Model):
     uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
     vip_level = db.Column(db.Integer)
     vip_score = db.Column(db.Integer)
-    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
     user = db.relationship("User", backref="vip", lazy="dynamic")
-
-
