@@ -2,7 +2,7 @@ from flask_restful import Api
 
 from apps.main.api import MainResource
 
-api = Api(prefix='/api/v1')
+api = Api()
 
 
 def init_api(app):

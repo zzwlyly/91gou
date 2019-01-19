@@ -1,114 +1,72 @@
-'''
+import datetime
 
-用户
-	users（用户表）
-		uid
-			用户id
-		username
-			用户名
-		password
-			登录密码
-		user_photo
-			头像
-		nick_name
-			昵称
-		name
-			姓名
-		sex
-			性别
-		birthday
-			生日
-		telphone
-			手机号
-		email
-			邮箱
-		flag
-			0 用户 1 商家
-		is_delete
-			0:删除 1:有效
-		create_time
-			创建时间
-	user_address（用户地址表）
-		aid
-		uid
-			用户id
-		name
-			收货人名字
-		phone
-			收货人号码
-		address
-			收货人地址
-		detail
-			详细地址
-		is_delete
-			0:删除 1:有效
-		create_time
-			创建时间
-	user_appraise（用户评价表）
-		id
-		uid
-			用户id
-		good_id
-			商品id
-		rating
-			评价等级
-				-1 差评 0 中评 1 好评
-		appraise_desc
-			评论内容
-		img1
-			评价照片
-		img2
-		img3
-		img4
-		img5
-		is_delete
-			0:删除 1:有效
-		create_time
-			创建时间
-	user_safe（用户安全设置表）
-		id
-		uid
-			用户id
-		safe_score
-			安全分
-		password
-			登录密码
-		pay_pwd
-			支付密码
-		bind_phone
-			绑定的手机号
-		bind_email
-			绑定的邮箱
-		id_card
-			身份证号
-		real_name
-			身份证姓名
-		front_img
-			身份证正面（sha1存储，fp指纹存储，唯一）
-		reverse_img
-			身份证反面
-		question1
-			安全问题1
-		question2
-			安全问题2
-		answer1
-			问题答案1
-		answer2
-			问题答案2
-		is_delete
-			0:删除 1:有效
-		create_time
-			创建时间
-	vip（会员等级表）
-		id
-		uid
-			用户id
-		vip_level
-			会员等级
-		vip_score
-			会员积分
-		is_delete
-			0:删除 1:有效
-		create_time
-			创建时间
-'''
+from apps.ext import db
+
+
+# 用户表
+class User(db.Model):
+    __tablename__ = "user"
+    uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(64), nullable=False, unique=True)
+    password = db.Column(db.String(64), nullable=False)
+    user_photo = db.Column(db.String(128))
+    nick_name = db.Column(db.String(64))
+    name = db.Column(db.String(64))
+    sex = db.Column(db.Integer(16))  # 0男,1女
+    birthday = db.Column(db.DateTime)
+    telephone = db.Column(db.Integer)
+    email = db.Column(db.String(64))
+    flag = db.Column(db.Integer)  # 0 用户 1 商家
+    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+
+
+# 用户地址表
+class Address(db.Model):
+    __tablename__ = "address"
+    aid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
+    name = db.Column(db.String(64))
+    phone = db.Column(db.Integer)
+    address = db.Column(db.String(255))
+    detail = db.Column(db.Text)
+    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+    user = db.relationship("User", backref="address", lazy="dynamic")
+
+
+# 用户安全设置表
+class UserSafe(db.Model):
+    __tablename__ = "user_safe"
+    sid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
+    safe_score = db.Column(db.Integer)
+    password = db.Column(db.String(64), nullable=False)
+    pay_pwd = db.Column(db.String(32))
+    bind_phone = db.Column(db.Integer)
+    bind_email = db.Column(db.String(64))
+    id_card = db.Column(db.Integer)
+    real_name = db.Column(db.String(16))
+    front_img = db.Column(db.String(255))
+    reverse_img = db.Column(db.String(255))
+    question1 = db.Column(db.String(255))
+    question2 = db.Column(db.String(255))
+    answer1 = db.Column(db.String(255))
+    answer2 = db.Column(db.String(255))
+    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+    user = db.relationship("User", backref="safe", lazy="dynamic")
+
+
+# vip表
+class Vip(db.Model):
+    __tablename__ = "vip"
+    sid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
+    vip_level = db.Column(db.Integer)
+    vip_score = db.Column(db.Integer)
+    is_delete = db.Column(db.Integer,default=1)  # 0:删除 1:有效
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+    user = db.relationship("User", backref="vip", lazy="dynamic")
+
+

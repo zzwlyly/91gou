@@ -1,27 +1,27 @@
-"""
-购物车模型
 
-cart_id
-	主键
-uid
-	外键，用户id
-status
-	用户状态
-		0 未登录/ 1 已登录
-is_delete
-	0:删除 1:有效
+# 购物车模型
+import datetime
+
+from apps.ext import db
+from apps.user.models import User
 
 
-购物车商品条目模型
-id
-	主键
-cart_id
-	外键，购物车id
-good_Id
-	商品id
-good_quantity
-	商品数量
-flag
-	商品状态，是否已购买结算
-		0 否 1 已结算
-"""
+class CartItem(db.Model):
+    __tablename__ = "cart_item"
+    cart_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
+    good_id = db.Column()#TODO
+    good_quantity = db.Column(db.Integer) # 商品数量
+    flag = db.Column(db.Integer, default=1)  # 0:未结算 1:已结算
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+    user = db.relationship("User", backref="address", lazy="dynamic")
+
+class CartOrder(db.Model):
+    __tablename__ = "cart_order"
+    order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cart_id = db.Column(db.ForeignKey(CartItem.cart_id,ondelete="CASCADE"))
+    oid = db.Column(db.Integer)
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+    car = db.relationship("CartItem",backref = "order",lazy = "dynamic")
+
+
