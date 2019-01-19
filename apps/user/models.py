@@ -1,0 +1,114 @@
+'''
+
+用户
+	users（用户表）
+		uid
+			用户id
+		username
+			用户名
+		password
+			登录密码
+		user_photo
+			头像
+		nick_name
+			昵称
+		name
+			姓名
+		sex
+			性别
+		birthday
+			生日
+		telphone
+			手机号
+		email
+			邮箱
+		flag
+			0 用户 1 商家
+		is_delete
+			0:删除 1:有效
+		create_time
+			创建时间
+	user_address（用户地址表）
+		aid
+		uid
+			用户id
+		name
+			收货人名字
+		phone
+			收货人号码
+		address
+			收货人地址
+		detail
+			详细地址
+		is_delete
+			0:删除 1:有效
+		create_time
+			创建时间
+	user_appraise（用户评价表）
+		id
+		uid
+			用户id
+		good_id
+			商品id
+		rating
+			评价等级
+				-1 差评 0 中评 1 好评
+		appraise_desc
+			评论内容
+		img1
+			评价照片
+		img2
+		img3
+		img4
+		img5
+		is_delete
+			0:删除 1:有效
+		create_time
+			创建时间
+	user_safe（用户安全设置表）
+		id
+		uid
+			用户id
+		safe_score
+			安全分
+		password
+			登录密码
+		pay_pwd
+			支付密码
+		bind_phone
+			绑定的手机号
+		bind_email
+			绑定的邮箱
+		id_card
+			身份证号
+		real_name
+			身份证姓名
+		front_img
+			身份证正面（sha1存储，fp指纹存储，唯一）
+		reverse_img
+			身份证反面
+		question1
+			安全问题1
+		question2
+			安全问题2
+		answer1
+			问题答案1
+		answer2
+			问题答案2
+		is_delete
+			0:删除 1:有效
+		create_time
+			创建时间
+	vip（会员等级表）
+		id
+		uid
+			用户id
+		vip_level
+			会员等级
+		vip_score
+			会员积分
+		is_delete
+			0:删除 1:有效
+		create_time
+			创建时间
+'''
