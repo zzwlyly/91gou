@@ -8,7 +8,7 @@ from apps.user.models import User
 class Shop(db.Model):
     __tablename__ = "shop"
     shop_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    uid = db.Column(db.ForeignKey(User.uid, ondelete="CASCADE"))
+    uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
     shop_name = db.Column(db.String(64))
     is_self = db.Column(db.Integer)  # 0：自营 1：非自营
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
@@ -42,7 +42,7 @@ class GoodNav(db.Model):
 class GoodCategory(db.Model):
     __tablename__ = "good_category"
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nid = db.Column(db.ForeignKey(GoodNav.nid, ondelete="CASCADE"))
+    nid = db.Column(db.Integer, db.ForeignKey(GoodNav.nid, ondelete="CASCADE"))
     name = db.Column(db.String(64))
     brand = db.Column(db.Integer)  # 分类等级
     cate_sort = db.Column(db.Integer)  # 排序
@@ -56,7 +56,7 @@ class GoodCategory(db.Model):
 class GcProperty(db.Model):
     __tablename__ = "cate_property"
     gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    cid = db.Column(db.ForeignKey(GoodCategory.cid, ondelete="CASCADE"))
+    cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid, ondelete="CASCADE"))
     name = db.Column(db.String(255))
     values = db.Column(db.String(255))
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
