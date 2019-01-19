@@ -12,7 +12,7 @@ class User(db.Model):
     user_photo = db.Column(db.String(128))
     nick_name = db.Column(db.String(64))
     name = db.Column(db.String(64))
-    sex = db.Column(db.Integer(16))  # 0男,1女
+    sex = db.Column(db.Integer)  # 0男,1女
     birthday = db.Column(db.DateTime)
     telephone = db.Column(db.Integer)
     email = db.Column(db.String(64))

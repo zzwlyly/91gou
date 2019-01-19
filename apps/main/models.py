@@ -44,7 +44,9 @@ class GoodNav(db.Model):
 class GoodCategory(db.Model):
     __tablename__ = "good_category"
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nid = db.Column(db.Integer, db.ForeignKey(GoodNav.nid, ondelete="CASCADE"))
+    # 外键
+    nid = db.Column(db.Integer)
+    # nid = db.Column(db.Integer, db.ForeignKey(GoodNav.nid, ondelete="CASCADE"))
     name = db.Column(db.String(64))
     brand = db.Column(db.Integer)  # 分类等级
     cate_sort = db.Column(db.Integer)  # 排序
@@ -58,8 +60,10 @@ class GoodCategory(db.Model):
 # 商品分类属性表
 class GcProperty(db.Model):
     __tablename__ = "cate_property"
-    gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid, ondelete="CASCADE"))
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 外键
+    cid = db.Column(db.Integer)
+    # cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid, ondelete="CASCADE"))
     name = db.Column(db.String(255))
     values = db.Column(db.String(255))
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效

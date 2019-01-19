@@ -9,9 +9,14 @@ from apps.main.models import GoodCategory, GcProperty
 class Goods(db.Model):
     __tablename__ = "goods"
     good_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid))
-    shop_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+
+    # cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid))
+    # shop_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+    # 外键
+    cid = db.Column(db.Integer)
+    shop_id = db.Column(db.Integer)
     brand_id = db.Column(db.Integer)
+    ################
     good_name = db.Column(db.String(255), nullable=False)
     stocks = db.Column(db.Integer)
     good_tips = db.Column(db.String(255), nullable=False)
@@ -31,12 +36,16 @@ class Goods(db.Model):
     goods_spu = db.relationship("GoodsSPU", backref="goods", lazy="dynamic")
     goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
 
+
 # =============================================================================这是分界线
 
 class GoodsSPU(db.Model):
     __tablename__ = "goods_spu"
     spu_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+
+    good_id = db.Column(db.Integer)
+    # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+
     spu_prop1 = db.Column(db.String(255))
     spu_prop2 = db.Column(db.String(255))
     spu_prop3 = db.Column(db.String(255))
@@ -63,14 +72,16 @@ class GoodsSPU(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
 
-
 # =============================================================================这是分界线
 
 
 class GoodsSKU(db.Model):
     __tablename__ = "goods_sku"
     sku_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+
+    good_id = db.Column(db.Integer)
+    # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+
     sku_name = db.Column(db.String(255))
     spu_prop1 = db.Column(db.String(255))
     spu_prop2 = db.Column(db.String(255))

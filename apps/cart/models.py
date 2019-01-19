@@ -22,6 +22,6 @@ class CartOrder(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     cart_id = db.Column(db.Integer, db.ForeignKey(CartItem.cart_id, ondelete="CASCADE"))
-    oid = db.Column(db.Integer, db.ForeignKey(Orders.oid), ondelete="CASCADE")
+    oid = db.Column(db.Integer, db.ForeignKey(Orders.oid, ondelete="CASCADE"))
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
