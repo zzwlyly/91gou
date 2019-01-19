@@ -53,6 +53,7 @@ class Orders(db.Model):
     pay_time = db.Column(db.DateTime)
     # 0:删除 1:有效
     is_delete = db.Column(db.Integer, default=1)
+    order_item = db.relationship("OrderItem", backref="Orders", lazy="dynamic")
 
 
 # 订单内商品条目表
@@ -67,7 +68,6 @@ class OrderItem(db.Model):
     good_id = db.Column(db.Integer)
     # 商品数量
     good_quantity = db.Column(db.Integer)
-    orders = db.relationship("Orders", backref="order_item", lazy="dynamic")
 
 
 # 订单退款退货表
@@ -97,4 +97,3 @@ class OrderRefunds(db.Model):
     refund_status = db.Column(db.Integer)
     # 退款发起时间
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    user = db.relationship("User", backref="order_refunds", lazy="dynamic")

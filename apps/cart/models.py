@@ -15,7 +15,6 @@ class CartItem(db.Model):
     good_quantity = db.Column(db.Integer)  # 商品数量
     flag = db.Column(db.Integer, default=1)  # 0:未结算 1:已结算
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    user = db.relationship("User", backref="cart_item", lazy="dynamic")
 
 
 class CartOrder(db.Model):
@@ -25,4 +24,4 @@ class CartOrder(db.Model):
     cart_id = db.Column(db.Integer, db.ForeignKey(CartItem.cart_id, ondelete="CASCADE"))
     oid = db.Column(db.Integer, db.ForeignKey(Orders.oid), ondelete="CASCADE")
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    cart_item = db.relationship("CartItem", backref="cart_order", lazy="dynamic")
+

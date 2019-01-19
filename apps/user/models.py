@@ -20,6 +20,12 @@ class User(db.Model):
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
+    appraise = db.relationship("Appraise", backref="user", lazy="dynamic")
+    address = db.relationship("Address", backref="user", lazy="dynamic")
+    orders = db.relationship("Orders", backref="user", lazy="dynamic")
+    order_refunds = db.relationship("OrderRefunds", backref="user", lazy="dynamic")
+    cart_item = db.relationship("CartItem", backref="user", lazy="dynamic")
+
 
 # 用户地址表
 class Address(db.Model):
@@ -32,7 +38,6 @@ class Address(db.Model):
     detail = db.Column(db.Text)
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    user = db.relationship("User", backref="address", lazy="dynamic")
 
 
 # 用户安全设置表
@@ -55,7 +60,6 @@ class UserSafe(db.Model):
     answer2 = db.Column(db.String(255))
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    user = db.relationship("User", backref="safe", lazy="dynamic")
 
 
 # vip表
@@ -67,4 +71,3 @@ class Vip(db.Model):
     vip_score = db.Column(db.Integer)
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    user = db.relationship("User", backref="vip", lazy="dynamic")

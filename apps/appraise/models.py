@@ -37,5 +37,4 @@ class Appraise(db.Model):
     img5 = db.Column(db.String(255))
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    user = db.relationship("User", backref="appraise", lazy="dynamic")
-    goods = db.relationship("Goods", backref="appraise", lazy="dynamic")
+
