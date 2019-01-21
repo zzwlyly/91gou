@@ -48,7 +48,6 @@ class GoodCategory(db.Model):
     nid = db.Column(db.Integer)
     # nid = db.Column(db.Integer, db.ForeignKey(GoodNav.nid, ondelete="CASCADE"))
     name = db.Column(db.String(64))
-    brand = db.Column(db.Integer)  # 分类等级
     cate_sort = db.Column(db.Integer)  # 排序
     is_show = db.Column(db.Integer)  # 0：隐藏 1：显示
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效

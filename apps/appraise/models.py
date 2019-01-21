@@ -11,7 +11,7 @@ class Appraise(db.Model):
     __tabelname__ = "appraise"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
-    good_id = db.Column(db.Integer, db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
+    good_id = db.Column(db.Integer, db.ForeignKey(Goods.id, ondelete="CASCADE"))
     rating = db.Column(db.Integer)  # 等级
     appraise_desc = db.Column(db.Text)
     img1 = db.Column(db.String(255))

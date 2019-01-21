@@ -36,7 +36,7 @@ login_manager = LoginManager()
 
 
 def init_login(app: Flask):
-    login_manager.login_view = '/account/login/'
+    login_manager.login_view = '/user/login/'
     # basic   strong  None
     login_manager.session_protection = 'strong'
     login_manager.init_app(app)
