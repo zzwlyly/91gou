@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+
+
 __author__ = "zzw"
 __date__ = "2019/1/19 09:26"
 
@@ -15,3 +17,5 @@ def create_app(env_name):
     init_api(app)
     init_ext(app)
     return app
+
+

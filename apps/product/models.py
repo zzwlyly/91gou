@@ -20,7 +20,7 @@ class Goods(db.Model):
     shop_id = db.Column(db.Integer)
     brand_id = db.Column(db.Integer)
     ################
-    good_name = db.Column(db.String(255), nullable=False, index=True)
+    good_name = db.Column(db.String(255), nullable=False)
     show_img = db.Column(db.String(255))
     good_desc = db.Column(db.String(255))
     good_price = db.Column(db.Numeric(11, 2))
@@ -89,7 +89,7 @@ class GoodsSKU(db.Model):
     good_id = db.Column(db.Integer)
     # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
 
-    sku_name = db.Column(db.String(255), index=True)
+    sku_name = db.Column(db.String(255))
     spu_prop1 = db.Column(db.String(255))
     spu_prop2 = db.Column(db.String(255))
     spu_prop3 = db.Column(db.String(255))

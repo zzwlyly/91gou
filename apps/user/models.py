@@ -1,5 +1,5 @@
 import datetime
-
+from werkzeug.security import check_password_hash,generate_password_hash
 from apps.ext import db
 
 
@@ -25,6 +25,30 @@ class User(db.Model):
     # orders = db.relationship("Orders", backref="user", lazy="dynamic")
     # order_refunds = db.relationship("OrderRefunds", backref="user", lazy="dynamic")
     # cart_item = db.relationship("CartItem", backref="user", lazy="dynamic")
+
+    def __init__(self, name, password):
+        self.name = name
+        self.password = password
+
+    def get_id(self):
+        return self.uid
+
+    @property
+    def password(self):
+        return self.password
+
+    # 加密
+    @password.setter
+    def password(self, password):
+        if password:
+            self.password = generate_password_hash(password)
+        else:
+            raise Exception('password is not null')
+
+    # 验证密码
+    def verify_password(self, password):
+        return check_password_hash(password, self._password)
+
 
 
 # 用户地址表
