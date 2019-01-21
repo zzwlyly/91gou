@@ -2,7 +2,7 @@ from flask_restful import Resource
 
 from apps.main.field import MainNavFields
 from apps.main.models import GoodNav
-from apps.utils.response_result import to_response_success
+from apps.utils.response_result import to_response_success, RESPONSE_SUCCESS_STATUS
 
 
 class MainResource(Resource):
@@ -36,3 +36,7 @@ class MainNavResource(Resource):
 
         return to_response_success(data=nav, fields=MainNavFields.result_fields)
         # return 'main'
+
+    def post(self):
+
+        return RESPONSE_SUCCESS_STATUS
