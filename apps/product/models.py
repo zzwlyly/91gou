@@ -17,9 +17,9 @@ class Goods(db.Model):
     shop_id = db.Column(db.Integer)
     brand_id = db.Column(db.Integer)
     ################
-    good_name = db.Column(db.String(255), nullable=False)
+    good_name = db.Column(db.String(255), nullable=False, index=True)
     stocks = db.Column(db.Integer)
-    good_tips = db.Column(db.String(255), nullable=False)
+    good_tips = db.Column(db.String(255))
     is_hot = db.Column(db.Integer)
     is_new = db.Column(db.Integer)
     is_recom = db.Column(db.Integer)
@@ -82,7 +82,7 @@ class GoodsSKU(db.Model):
     good_id = db.Column(db.Integer)
     # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
 
-    sku_name = db.Column(db.String(255))
+    sku_name = db.Column(db.String(255),index=True)
     spu_prop1 = db.Column(db.String(255))
     spu_prop2 = db.Column(db.String(255))
     spu_prop3 = db.Column(db.String(255))
