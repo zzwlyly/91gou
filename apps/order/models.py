@@ -1,5 +1,4 @@
 import datetime
-
 from apps.ext import db
 from apps.product.models import Goods
 from apps.user.models import User, Address
