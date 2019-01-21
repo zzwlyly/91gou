@@ -5,7 +5,7 @@ from apps.cart.api import CartResource
 from apps.main.api import MainResource, MainNavResource
 from apps.order.api import OrdersResource
 from apps.product.api import GoodsResource
-from apps.user.api import RegisterResource
+from apps.user.api import RegisterResource, LoginResource
 
 api = Api(prefix='/api/v1')
 
@@ -21,3 +21,4 @@ api.add_resource(MainNavResource, '/main/nav/')
 api.add_resource(OrdersResource, '/orders/')
 api.add_resource(GoodsResource, '/goods/')
 api.add_resource(RegisterResource, '/register/')
+api.add_resource(LoginResource, '/login/')
