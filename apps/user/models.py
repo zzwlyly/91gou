@@ -20,11 +20,11 @@ class User(db.Model):
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
-    appraise = db.relationship("Appraise", backref="user", lazy="dynamic")
-    address = db.relationship("Address", backref="user", lazy="dynamic")
-    orders = db.relationship("Orders", backref="user", lazy="dynamic")
-    order_refunds = db.relationship("OrderRefunds", backref="user", lazy="dynamic")
-    cart_item = db.relationship("CartItem", backref="user", lazy="dynamic")
+    # appraise = db.relationship("Appraise", backref="user", lazy="dynamic")
+    # address = db.relationship("Address", backref="user", lazy="dynamic")
+    # orders = db.relationship("Orders", backref="user", lazy="dynamic")
+    # order_refunds = db.relationship("OrderRefunds", backref="user", lazy="dynamic")
+    # cart_item = db.relationship("CartItem", backref="user", lazy="dynamic")
 
 
 # 用户地址表

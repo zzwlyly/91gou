@@ -13,7 +13,7 @@ class Shop(db.Model):
     is_self = db.Column(db.Integer)  # 0：自营 1：非自营
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    goods = db.relationship("Goods", backref="shop", lazy="dynamic")
+    # goods = db.relationship("Goods", backref="shop", lazy="dynamic")
 
 
 # 品牌表
@@ -37,7 +37,7 @@ class GoodNav(db.Model):
     sort = db.Column(db.Integer)  # 排序
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    good_category = db.relationship("GoodCategory", backref="good_nav", lazy="dynamic")
+    # good_category = db.relationship("GoodCategory", backref="good_nav", lazy="dynamic")
 
 
 # 商品分类
@@ -52,8 +52,8 @@ class GoodCategory(db.Model):
     is_show = db.Column(db.Integer)  # 0：隐藏 1：显示
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    cate_property = db.relationship("GcProperty", backref="good_category", lazy="dynamic")
-    goods = db.relationship("Goods", backref="good_category", lazy="dynamic")
+    # cate_property = db.relationship("GcProperty", backref="good_category", lazy="dynamic")
+    # goods = db.relationship("Goods", backref="good_category", lazy="dynamic")
 
 
 # 商品分类属性表
@@ -65,5 +65,12 @@ class GcProperty(db.Model):
     # cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid, ondelete="CASCADE"))
     name = db.Column(db.String(255))
     values = db.Column(db.String(255))
+    is_delete = db.Column(db.Integer)  # 0：删除 1：有效
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+
+
+class Banners(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    img = db.Column(db.String(255))
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())

@@ -39,9 +39,9 @@ class Goods(db.Model):
     # 创建时间
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
-    appraise = db.relationship("Appraise", backref="goods", lazy="dynamic")
-    goods_spu = db.relationship("GoodsSPU", backref="goods", lazy="dynamic")
-    goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
+    # appraise = db.relationship("Appraise", backref="goods", lazy="dynamic")
+    # goods_spu = db.relationship("GoodsSPU", backref="goods", lazy="dynamic")
+    # goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
 
 
 # =============================================================================这是分界线
