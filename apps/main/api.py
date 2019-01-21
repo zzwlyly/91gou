@@ -17,25 +17,27 @@ class MainNavResource(Resource):
         first_nav = GoodNav.query.filter(GoodNav.level == 1).all()
         second_nav = GoodNav.query.filter(GoodNav.level == 2).all()
         third_nav = GoodNav.query.filter(GoodNav.level == 3).all()
+
         nav = []
         sec = []
         thi = []
-        for first in first_nav:
-            nav.append(first)
-            for second in second_nav:
-                if first.nid == second.parent_id:
-                    sec.append(second)
-                    nav.append([first, {'second': second}])
-                    # for third in third_nav:
-                    #     if second.nid == third.parent_id:
-                    #         thi.append(third)
-                    #         sec.append({'third': thi})
 
+        for first in first_nav:
+            nav.append({})
+            # nav.append(first)
+            # for second in second_nav:
+            #     if first.nid == second.parent_id:
+            #         sec.append(second)
+            #         for third in third_nav:
+            #             if second.nid == third.parent_id:
+            #                 thi.append(third)
+            #                 # sec.append({'third': thi})
+            # nav.append([first, {'second': sec, 'third': thi}])
         print(nav)
         # print(first_nav, second_nav, third_nav)
 
-        return to_response_success(data=nav, fields=MainNavFields.result_fields)
-        # return 'main'
+        # return to_response_success(data=nav, fields=MainNavFields.result_fields)
+        return 'main'
 
     def post(self):
 
