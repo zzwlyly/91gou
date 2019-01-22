@@ -64,7 +64,7 @@ class OrderItem(db.Model):
     # 外键  关联User用户表
     uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
     # 所购买的商品id
-    good_id = db.Column(db.Integer)
+    good_id = db.Column(db.String(32))
     # 商品数量
     good_quantity = db.Column(db.Integer)
 
@@ -78,7 +78,7 @@ class OrderRefunds(db.Model):
     # 退款人id  关联User用户表
     uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
     # 退款商品id
-    good_id = db.Column(db.Integer, db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
     # 退款流水号
     refund_no = db.Column(db.String(32))
     # 退款备注
