@@ -2,7 +2,7 @@ from flask_restful import Resource
 
 from apps.main.field import MainNavFields
 from apps.main.models import GoodNav
-from apps.utils.response_result import to_response_success, RESPONSE_SUCCESS_STATUS, to_response_error
+from apps.utils.response_result import to_response_success, to_response_error
 
 
 class MainResource(Resource):

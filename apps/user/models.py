@@ -18,6 +18,7 @@ class User(db.Model):
     email = db.Column(db.String(64))
     flag = db.Column(db.Integer)  # 0 用户 1 商家
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
+    is_active = db.Column(db.Integer,default=0)
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
     # appraise = db.relationship("Appraise", backref="user", lazy="dynamic")
@@ -43,7 +44,7 @@ class User(db.Model):
 
     # 验证密码
     def verify_password(self, password):
-        return check_password_hash(password, self._password)
+        return check_password_hash(self._password, password)
 
 
 # 用户地址表
@@ -90,7 +91,6 @@ class Vip(db.Model):
     vip_score = db.Column(db.Integer)
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-
 
 # if __name__ == '__main__':
 #     pwd = 'a123456'
