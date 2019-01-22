@@ -22,7 +22,7 @@ class LoginResource(Resource):
         self.parser.add_argument('password', type=str, location='form')
 
     def check_name(self, username):
-        check_username = re.compile(r"^\w{8,16}")
+        check_username = re.compile(r"^(?=.*?[a-z])\w{8,16}$")
         check_phone = re.compile(r"(^(13\d|14[57]|15[^4\D]|17[13678]|18\d)\d{8}|170[^346\D]\d{7})$")
         check_email = re.compile(r"^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")
         if check_username.match(username):
@@ -69,7 +69,7 @@ class RegisterResource(Resource):
         check_psw = data.get("password_repeat")
         email = data.get("email")
         phone = data.get("phone")
-        check_username = re.compile(r"^\w{8,16}")
+        check_username = re.compile(r"^(?=.*?[a-z])\w{8,16}$")
         check_password = re.compile(r"^[a-zA-Z]\w{5,17}$")
         check_phone = re.compile(r"(^(13\d|14[57]|15[^4\D]|17[13678]|18\d)\d{8}|170[^346\D]\d{7})$")
         check_email = re.compile(r"^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")
