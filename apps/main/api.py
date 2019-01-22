@@ -1,7 +1,7 @@
 from flask_restful import Resource
 
 from apps.main.field import MainNavFields
-from apps.main.models import GoodNav
+from apps.main.models import GoodNav, GoodCategory
 from apps.utils.response_result import to_response_success, to_response_error
 
 
@@ -25,5 +25,14 @@ class MainNavResource(Resource):
                 return data
 
             return to_response_success(data=get_children(), fields=MainNavFields.result_fields)
+        except Exception as e:
+            return to_response_error()
+
+
+class MainCategoryResource(Resource):
+    def get(self):
+        try:
+            cate = GoodCategory.query.all()
+
         except Exception as e:
             return to_response_error()

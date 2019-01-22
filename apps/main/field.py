@@ -7,7 +7,6 @@ from flask_restful import fields
 
 
 class MainNavFields:
-
     third_fields = {
         'nid': fields.Integer,
         'name': fields.String,
@@ -31,3 +30,22 @@ class MainNavFields:
         'data': fields.List(fields.Nested(first_fields))
     }
 
+
+class MainCategoryFields:
+    property_fields = {
+        'name': fields.String,
+        'values': fields.String,
+    }
+
+    data_fields = {
+        'cid': fields.Integer,
+        'nid': fields.Integer,
+        'name': fields.String,
+        'property': fields.List(fields.Nested(property_fields)),
+    }
+
+    result_fields = {
+        'status': fields.Integer(default=RESPONSE_SUCCESS_STATUS),
+        'msg': fields.String(default=RESPONSE_SUCCESS_MSG),
+        'data': fields.List(fields.Nested(data_fields))
+    }
