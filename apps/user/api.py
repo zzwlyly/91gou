@@ -20,7 +20,8 @@ class LoginResource(Resource):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('username', type=str, location='form')
         self.parser.add_argument('password', type=str, location='form')
-    def check_name(self,username):
+
+    def check_name(self, username):
         check_username = re.compile(r"^\w{8,16}")
         check_phone = re.compile(r"(^(13\d|14[57]|15[^4\D]|17[13678]|18\d)\d{8}|170[^346\D]\d{7})$")
         check_email = re.compile(r"^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")
@@ -33,6 +34,7 @@ class LoginResource(Resource):
         elif check_email.match(username):
             user = User.query.filter(User.email == username).first()
             return user
+
     def post(self):
         # global user
         data = self.parser.parse_args()
@@ -43,13 +45,11 @@ class LoginResource(Resource):
         if user:
             if user.verify_password(password):
                 login_user(user, remember=True)
-                return render_template("/")
+                return 'login success!'
             else:
-                flash("账号或密码有误!请重新输入")
-                return render_template('/')
+                return 'login error~'
         else:
-            flash("用户不存在,请注册!")
-            return render_template("/")
+            return 'user not exist~'
 
 
 class RegisterResource(Resource):
@@ -86,11 +86,11 @@ class RegisterResource(Resource):
                     # flash("注册成功!请登录!")
                     return "success"
                 else:
-                    flash("请按正确的格式填写内容!")
-                    return render_template("/")
+                    # flash("请按正确的格式填写内容!")
+                    return 'format error~'
             else:
-                flash("用户已存在!")
-                return "123"
+                # flash("用户已存在!")
+                return "user is exist~"
         else:
-            flash("请填写全部内容!")
-            return render_template("/")
+            # flash("请填写全部内容!")
+            return 'incomplete data~'
