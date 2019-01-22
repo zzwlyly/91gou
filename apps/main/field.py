@@ -11,31 +11,23 @@ class MainNavFields:
     third_fields = {
         'nid': fields.Integer,
         'name': fields.String,
-        'sort': fields.Integer
     }
 
     second_fields = {
         'nid': fields.Integer,
         'name': fields.String,
-        'sort': fields.Integer,
-        'third': fields.List(fields.Nested(third_fields))
+        'children': fields.List(fields.Nested(third_fields))
     }
 
-    data_fields = {
+    first_fields = {
         'nid': fields.Integer,
         'name': fields.String,
-        'sort': fields.Integer,
-        # 'cate': fields.List(fields.Nested(second_fields))
+        'children': fields.List(fields.Nested(second_fields))
     }
-
-    # data_fields = {
-    #     'nid': fields.Integer,
-    #     'name': fields.String,
-    #     'sort': fields.Integer,
-    # }
 
     result_fields = {
         'status': fields.Integer(default=RESPONSE_SUCCESS_STATUS),
         'msg': fields.String(default=RESPONSE_SUCCESS_MSG),
-        'data': fields.List(fields.Nested(data_fields))
+        'data': fields.List(fields.Nested(first_fields))
     }
+

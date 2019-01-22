@@ -2,7 +2,7 @@ from flask_restful import Resource
 
 from apps.main.field import MainNavFields
 from apps.main.models import GoodNav
-from apps.utils.response_result import to_response_success, RESPONSE_SUCCESS_STATUS
+from apps.utils.response_result import to_response_success, RESPONSE_SUCCESS_STATUS, to_response_error
 
 
 class MainResource(Resource):
@@ -14,31 +14,16 @@ class MainResource(Resource):
 class MainNavResource(Resource):
     def get(self):
 
-        first_nav = GoodNav.query.filter(GoodNav.level == 1).all()
-        second_nav = GoodNav.query.filter(GoodNav.level == 2).all()
-        third_nav = GoodNav.query.filter(GoodNav.level == 3).all()
+        try:
+            nav = GoodNav.query.all()
 
-        nav = []
-        sec = []
-        thi = []
+            def get_children(nid=0):
+                data = []
+                for obj in nav:
+                    if obj.parent_id == nid:
+                        data.append({"nid": obj.nid, "name": obj.name, "children": get_children(obj.nid)})
+                return data
 
-        for first in first_nav:
-            nav.append({})
-            # nav.append(first)
-            # for second in second_nav:
-            #     if first.nid == second.parent_id:
-            #         sec.append(second)
-            #         for third in third_nav:
-            #             if second.nid == third.parent_id:
-            #                 thi.append(third)
-            #                 # sec.append({'third': thi})
-            # nav.append([first, {'second': sec, 'third': thi}])
-        print(nav)
-        # print(first_nav, second_nav, third_nav)
-
-        # return to_response_success(data=nav, fields=MainNavFields.result_fields)
-        return 'main'
-
-    def post(self):
-
-        return RESPONSE_SUCCESS_STATUS
+            return to_response_success(data=get_children(), fields=MainNavFields.result_fields)
+        except Exception as e:
+            return to_response_error()
