@@ -9,6 +9,8 @@ from flask_restful import fields
 class GoodsFields:
     sku_fields = {
         'sku_name': fields.String,
+        'current_price': fields.Integer,
+        'good_stock': fields.Integer,
     }
 
     spu_fields = {
@@ -20,8 +22,12 @@ class GoodsFields:
     }
     # 数据结构的键名是模型字段名
     data_fields = {
-        'good_id': fields.String,
         'cid': fields.Integer,
+        'good_id': fields.String,
+        'good_name': fields.String,
+        'show_img': fields.String,
+        'good_desc': fields.String,
+        'good_price': fields.Integer,
         'goods_sku': fields.List(fields.Nested(sku_fields)),
         'goods_spu': fields.List(fields.Nested(spu_fields)),
         'goods_img': fields.List(fields.Nested(img_fields)),
