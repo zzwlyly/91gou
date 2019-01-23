@@ -1,12 +1,11 @@
 import re
 from threading import Thread
-
 from flask import session, request
 from flask_restful import Resource, reqparse
 from apps import config
 from apps.config import R
 from apps.ext import db
-from apps.user.field import UserFields
+from apps.user.field import UserLoginFields, UserMessageFields
 from apps.utils.response_result import to_response_success
 
 __author__ = 'zhanjiahuan'
@@ -14,7 +13,7 @@ __date__ = '2019/1/21 10:58'
 
 from flask_login import login_user, login_required, logout_user
 
-from apps.user.models import User
+from apps.user.models import User, Address, Vip, UserSafe
 
 parser = reqparse.RequestParser()
 
@@ -60,7 +59,7 @@ class LoginResource(Resource):
                     R.sadd("user_sessions", user.uid)
                     R.expire("user_sessions", 24 * 60 * 60)
                     data = user.uid
-                    return to_response_success(data=data, fields=UserFields.result_fields)
+                    return to_response_success(data=data, fields=UserLoginFields.result_fields)
                 else:
                     return 'login error~'
             else:
@@ -99,7 +98,7 @@ class RegisterResource(Resource):
                     db.session.add(user)
                     db.session.commit()
                     data = "注册成功!请跳转登录页面!"
-                    return to_response_success(data=data, fields=UserFields.result_fields)
+                    return to_response_success(data=data, fields=UserLoginFields.result_fields)
                 else:
                     # flash("请按正确的格式填写内容!")
                     return 'format error~'
@@ -125,3 +124,24 @@ class RegisterResource(Resource):
 #
 #     # 发送邮件
 #     yag.send(mail, '文档', contents)
+
+# 用户信息数据 注释部分待配合前端测试
+class UserMessageResource(Resource):
+    # def __init__(self):
+    #     self.parser = reqparse.RequestParser()
+    #     self.parser.add_argument('uid', type=int)
+
+    def get(self):
+        # data = self.parser.parse_args()
+        # uid = data.get("uid")
+        user = User.query.filter(User.uid == 1).all()
+        address = Address.query.filter(Address.uid == 1).all()
+        user_safe = UserSafe.query.filter(UserSafe.uid == 1).all()
+        vip = Vip.query.filter(Vip.uid == 1)
+        data = {
+            "user": user,
+            "address": address,
+            "user_safe": user_safe,
+            "vip": vip,
+        }
+        return to_response_success(data=data, fields=UserMessageFields.result_fields)

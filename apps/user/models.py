@@ -9,7 +9,7 @@ class User(db.Model):
     uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(64), nullable=False, unique=True)
     _password = db.Column(db.String(255), nullable=False)
-    user_photo = db.Column(db.String(128))
+    user_photo = db.Column(db.String(255))
     nick_name = db.Column(db.String(64))
     name = db.Column(db.String(64))
     sex = db.Column(db.Integer)  # 0男,1女
