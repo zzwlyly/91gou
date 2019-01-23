@@ -45,15 +45,16 @@ class GoodCategory(db.Model):
     __tablename__ = "good_category"
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # 外键
-    nid = db.Column(db.Integer)
-    # nid = db.Column(db.Integer, db.ForeignKey(GoodNav.nid, ondelete="CASCADE"))
+    # nid = db.Column(db.Integer)
+    nid = db.Column(db.Integer, db.ForeignKey(GoodNav.nid, ondelete="CASCADE"))
     name = db.Column(db.String(64))
     cate_sort = db.Column(db.Integer)  # 排序
     is_show = db.Column(db.Integer)  # 0：隐藏 1：显示
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    # cate_property = db.relationship("GcProperty", backref="good_category", lazy="dynamic")
-    # goods = db.relationship("Goods", backref="good_category", lazy="dynamic")
+
+    cate_property = db.relationship("GcProperty", backref="good_category", lazy="dynamic")
+    goods = db.relationship("Goods", backref="good_category", lazy="dynamic")
 
 
 # 商品分类属性表
@@ -61,8 +62,8 @@ class GcProperty(db.Model):
     __tablename__ = "cate_property"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # 外键
-    cid = db.Column(db.Integer)
-    # cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid, ondelete="CASCADE"))
+    # cid = db.Column(db.Integer)
+    cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid, ondelete="CASCADE"))
     name = db.Column(db.String(255))
     values = db.Column(db.String(255))
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效

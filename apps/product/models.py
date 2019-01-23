@@ -12,11 +12,11 @@ class Goods(db.Model):
 
     good_id = db.Column(db.String(32), unique=True)
 
-    # cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid))
+    cid = db.Column(db.Integer, db.ForeignKey(GoodCategory.cid))
     # shop_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
 
     # 外键
-    cid = db.Column(db.Integer)
+    # cid = db.Column(db.Integer)
     shop_id = db.Column(db.Integer)
     brand_id = db.Column(db.Integer)
     ################
@@ -39,9 +39,9 @@ class Goods(db.Model):
     # 创建时间
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
-    # appraise = db.relationship("Appraise", backref="goods", lazy="dynamic")
-    # goods_spu = db.relationship("GoodsSPU", backref="goods", lazy="dynamic")
-    # goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
+    appraise = db.relationship("Appraise", backref="goods", lazy="dynamic")
+    goods_spu = db.relationship("GoodsSPU", backref="goods", lazy="dynamic")
+    goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
 
 
 # =============================================================================这是分界线
