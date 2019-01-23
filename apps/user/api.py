@@ -11,7 +11,7 @@ from apps.utils.response_result import to_response_success
 __author__ = 'zhanjiahuan'
 __date__ = '2019/1/21 10:58'
 
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user
 
 from apps.user.models import User, Address, Vip, UserSafe
 
@@ -46,24 +46,33 @@ class LoginResource(Resource):
         uid = data.get("id_session")
         username = data.get("username")
         password = data.get("password")
-        if uid and R.sismember("user_session", uid):
-            user = User.query.filter(User.uid == uid)
-            login_user(user, remember=True)
-            return "直接跳转首页"
+        if uid and R.sismember("user_sessions", uid):
+            return "go to main"
         else:
             # 判断用户登录类型(账号,手机,邮箱)
             user = self.check_name(username)
+            id = user.uid
             if user:
                 if user.verify_password(password):
-                    login_user(user, remember=True)
                     R.sadd("user_sessions", user.uid)
                     R.expire("user_sessions", 24 * 60 * 60)
-                    data = user.uid
-                    return to_response_success(data=data, fields=UserLoginFields.result_fields)
+
+                    user = User.query.filter(User.uid == id).all()
+                    address = Address.query.filter(Address.uid == id).all()
+                    user_safe = UserSafe.query.filter(UserSafe.uid == id).all()
+                    vip = Vip.query.filter(Vip.uid == id).all()
+                    data = {
+                        "user": user,
+                        "address": address,
+                        "user_safe": user_safe,
+                        "vip": vip,
+                    }
+                    return to_response_success(data=data, fields=UserMessageFields.result_fields)
                 else:
                     return 'login error~'
             else:
                 return 'user not exist~'
+
 
 
 class RegisterResource(Resource):
@@ -125,23 +134,5 @@ class RegisterResource(Resource):
 #     # 发送邮件
 #     yag.send(mail, '文档', contents)
 
-# 用户信息数据 注释部分待配合前端测试
-class UserMessageResource(Resource):
-    # def __init__(self):
-    #     self.parser = reqparse.RequestParser()
-    #     self.parser.add_argument('uid', type=int)
 
-    def get(self):
-        # data = self.parser.parse_args()
-        # uid = data.get("uid")
-        user = User.query.filter(User.uid == 1).all()
-        address = Address.query.filter(Address.uid == 1).all()
-        user_safe = UserSafe.query.filter(UserSafe.uid == 1).all()
-        vip = Vip.query.filter(Vip.uid == 1)
-        data = {
-            "user": user,
-            "address": address,
-            "user_safe": user_safe,
-            "vip": vip,
-        }
-        return to_response_success(data=data, fields=UserMessageFields.result_fields)
+

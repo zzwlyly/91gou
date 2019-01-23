@@ -25,4 +25,4 @@ api.add_resource(OrdersResource, '/orders/')
 api.add_resource(GoodsResource, '/goods/')
 api.add_resource(RegisterResource, '/register/')
 api.add_resource(LoginResource, '/login/')
-api.add_resource(UserMessageResource, '/usermessage/')
+
