@@ -42,6 +42,7 @@ class Goods(db.Model):
     appraise = db.relationship("Appraise", backref="goods", lazy="dynamic")
     goods_spu = db.relationship("GoodsSPU", backref="goods", lazy="dynamic")
     goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
+    goods_img = db.relationship("GoodsImages", backref="goods", lazy="dynamic")
 
 
 # =============================================================================这是分界线
@@ -50,8 +51,8 @@ class GoodsSPU(db.Model):
     __tablename__ = "goods_spu"
     spu_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    good_id = db.Column(db.String(32))
-    # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+    # good_id = db.Column(db.String(32))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
 
     spu_prop = db.Column(db.Text)
     # spu_prop1 = db.Column(db.String(255))
@@ -87,8 +88,8 @@ class GoodsSKU(db.Model):
     __tablename__ = "goods_sku"
     sku_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    good_id = db.Column(db.String(32))
-    # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+    # good_id = db.Column(db.String(32))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
 
     sku_name = db.Column(db.String(255))
     sku_prop = db.Column(db.String(255))
@@ -109,7 +110,9 @@ class GoodsImages(db.Model):
     __tablename__ = "goods_images"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    good_id = db.Column(db.String(32))
+    # good_id = db.Column(db.String(32))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
+
     img = db.Column(db.String(255))
     # 0:删除 1:有效
     is_delete = db.Column(db.Boolean, default=1)

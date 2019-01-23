@@ -45,11 +45,15 @@ class LoginResource(Resource):
         if user:
             if user.verify_password(password):
                 login_user(user, remember=True)
-                return 'login success!'
+                return redirect('http://localhost:63343/91gou/main/main.html')
+                # return 'login success!'
             else:
-                return 'login error~'
+
+                return redirect('http://localhost:63343/91gou/main/login.html')
+                # return 'login error~'
         else:
-            return 'user not exist~'
+            return redirect('http://localhost:63343/91gou/main/login.html')
+            # return 'user not exist~'
 
 
 class RegisterResource(Resource):

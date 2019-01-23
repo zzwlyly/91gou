@@ -32,16 +32,19 @@ class MainNavFields:
 
 
 class MainCategoryFields:
+
     property_fields = {
         'name': fields.String,
         'values': fields.String,
     }
 
+    # 数据结构的键名是模型字段名
     data_fields = {
         'cid': fields.Integer,
         'nid': fields.Integer,
         'name': fields.String,
-        'property': fields.List(fields.Nested(property_fields)),
+        # 绑定从表数据，根据关联关系查询...
+        'cate_property': fields.List(fields.Nested(property_fields)),
     }
 
     result_fields = {
