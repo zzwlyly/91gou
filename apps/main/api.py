@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from apps.main.field import MainNavFields
+from apps.main.field import MainNavFields, MainCategoryFields
 from apps.main.models import GoodNav, GoodCategory
 from apps.utils.response_result import to_response_success, to_response_error
 
@@ -12,6 +12,9 @@ class MainResource(Resource):
 
 
 class MainNavResource(Resource):
+    '''
+    导航api
+    '''
     def get(self):
 
         try:
@@ -26,13 +29,18 @@ class MainNavResource(Resource):
 
             return to_response_success(data=get_children(), fields=MainNavFields.result_fields)
         except Exception as e:
+            print(e)
             return to_response_error()
 
 
 class MainCategoryResource(Resource):
+    '''
+    分类api
+    '''
     def get(self):
         try:
-            cate = GoodCategory.query.all()
-
+            cates = GoodCategory.query.all()
+            return to_response_success(data=cates, fields=MainCategoryFields.result_fields)
         except Exception as e:
+            print(e)
             return to_response_error()

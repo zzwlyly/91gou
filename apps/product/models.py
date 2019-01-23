@@ -42,6 +42,7 @@ class Goods(db.Model):
     appraise = db.relationship("Appraise", backref="goods", lazy="dynamic")
     goods_spu = db.relationship("GoodsSPU", backref="goods", lazy="dynamic")
     goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
+    goods_img = db.relationship("GoodsImages", backref="goods", lazy="dynamic")
 
 
 # =============================================================================这是分界线
@@ -50,30 +51,10 @@ class GoodsSPU(db.Model):
     __tablename__ = "goods_spu"
     spu_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    good_id = db.Column(db.String(32))
-    # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+    # good_id = db.Column(db.String(32))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
 
     spu_prop = db.Column(db.Text)
-    # spu_prop1 = db.Column(db.String(255))
-    # spu_prop2 = db.Column(db.String(255))
-    # spu_prop3 = db.Column(db.String(255))
-    # spu_prop4 = db.Column(db.String(255))
-    # spu_prop5 = db.Column(db.String(255))
-    # spu_prop6 = db.Column(db.String(255))
-    # spu_prop7 = db.Column(db.String(255))
-    # spu_prop8 = db.Column(db.String(255))
-    # spu_prop9 = db.Column(db.String(255))
-    # spu_prop10 = db.Column(db.String(255))
-    # spu_prop11 = db.Column(db.String(255))
-    # spu_prop12 = db.Column(db.String(255))
-    # spu_prop13 = db.Column(db.String(255))
-    # spu_prop14 = db.Column(db.String(255))
-    # spu_prop15 = db.Column(db.String(255))
-    # spu_prop16 = db.Column(db.String(255))
-    # spu_prop17 = db.Column(db.String(255))
-    # spu_prop18 = db.Column(db.String(255))
-    # spu_prop19 = db.Column(db.String(255))
-    # spu_prop20 = db.Column(db.String(255))
     # 0:删除 1:有效
     is_delete = db.Column(db.Boolean, default=1)
     # 创建时间
@@ -87,15 +68,11 @@ class GoodsSKU(db.Model):
     __tablename__ = "goods_sku"
     sku_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    good_id = db.Column(db.String(32))
-    # good_id = db.Column(db.Integer, db.ForeignKey(GcProperty.id))
+    # good_id = db.Column(db.String(32))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
 
     sku_name = db.Column(db.String(255))
     sku_prop = db.Column(db.String(255))
-    # sku_prop2 = db.Column(db.String(255))
-    # sku_prop3 = db.Column(db.String(255))
-    # sku_prop4 = db.Column(db.String(255))
-    # sku_prop5 = db.Column(db.String(255))
     original_price = db.Column(db.Numeric(10, 2))
     current_price = db.Column(db.Numeric(10, 2))
     good_stock = db.Column(db.Integer)
@@ -109,7 +86,9 @@ class GoodsImages(db.Model):
     __tablename__ = "goods_images"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    good_id = db.Column(db.String(32))
+    # good_id = db.Column(db.String(32))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id, ondelete="CASCADE"))
+
     img = db.Column(db.String(255))
     # 0:删除 1:有效
     is_delete = db.Column(db.Boolean, default=1)
