@@ -2,12 +2,10 @@ import re
 from threading import Thread
 
 from flask import session, request
-from flask_mail import Message
 from flask_restful import Resource, reqparse
-
 from apps import config
 from apps.config import R
-from apps.ext import db, mail
+from apps.ext import db
 from apps.user.field import UserFields
 from apps.utils.response_result import to_response_success
 
