@@ -1,9 +1,13 @@
 import re
+from threading import Thread
 
 from flask import session, request
+from flask_mail import Message
 from flask_restful import Resource, reqparse
+
+from apps import config
 from apps.config import R
-from apps.ext import db
+from apps.ext import db, mail
 from apps.user.field import UserFields
 from apps.utils.response_result import to_response_success
 
@@ -107,3 +111,19 @@ class RegisterResource(Resource):
         else:
             # flash("请填写全部内容!")
             return 'incomplete data~'
+
+
+# 用户账号邮箱验证激活
+# import yagmail
+#
+#
+# def send_mail(mail):
+#     # 链接邮箱服务器
+#     yag = yagmail.SMTP(user="zhanjiahuan123@163.com", password="python1805", host='smtp.163.com')
+#
+#     # 邮箱正文
+#     contents = ['This is the body, and here is just text http://somedomain/image.png',
+#                 'You can find an audio file attached.', '/local/path/song.mp3']
+#
+#     # 发送邮件
+#     yag.send(mail, '文档', contents)

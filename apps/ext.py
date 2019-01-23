@@ -1,4 +1,5 @@
 from flask_cors import CORS
+from flask_mail import Mail
 from flask_session import Session
 from flask_uploads import UploadSet, IMAGES, DOCUMENTS, configure_uploads
 from flask import Flask
@@ -22,6 +23,16 @@ def init_ext(app):
     init_cors(app)
     # 初始化session缓存
     init_session(app)
+    # 初始化邮箱配置
+    init_mail(app)
+
+
+# 初始化邮箱配置
+mail = Mail()
+
+
+def init_mail(app):
+    mail.init_app(app)
 
 
 db = SQLAlchemy()
@@ -33,10 +44,15 @@ def init_db(app):
     db.init_app(app)
     migrate.init_app(app=app, db=db)
 
+
 se = Session()
+
+
 # 初始化session缓存
 def init_session(app):
     se.init_app(app)
+
+
 # 实例化登录对象
 login_manager = LoginManager()
 

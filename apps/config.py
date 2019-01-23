@@ -2,10 +2,11 @@ import datetime
 import os
 
 import redis
+
 BASE_DIR = os.path.dirname(__file__)
 UPLOAD_ROOT_PATH = os.path.join(BASE_DIR, 'static/upload/')
 
-R=redis.Redis(host="127.0.0.1", port=6379, db=6)
+R = redis.Redis(host="127.0.0.1", port=6379, db=6)
 
 
 # 基础配置
@@ -102,3 +103,7 @@ environment = {
     ENVI_PRODUCT_KEY: ProductConfig,
 }
 # flask-sqlacodegen --outfile models.py  --flask mysql+pymysql://root:zzw123@127.0.0.1/tpp
+
+
+
+
