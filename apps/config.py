@@ -102,8 +102,24 @@ environment = {
     ENVI_DEV_KEY: DeveloperConfig,
     ENVI_PRODUCT_KEY: ProductConfig,
 }
-# flask-sqlacodegen --outfile models.py  --flask mysql+pymysql://root:zzw123@127.0.0.1/tpp
 
 
 
+"""
+==============支付宝配置=================
+"""
+# 支付宝注册应用生成的IP
+APP_ID = '2016092300580718'
+
+# 沙箱环境支付网关就是沙箱那面那个关口
+PAY_URL_DEV = 'https://openapi.alipaydev.com/gateway.do'
+# 正式支付的网关
+PAY_URL = 'https://openapi.alipay.com/gateway.do'
+# 公钥,私钥
+APP_PRIVATE_KEY_STR = open(os.path.join(BASE_DIR, 'alipay/app_private_key.pem')).read()
+APP_PUBLICK_KEY_STR = open(os.path.join(BASE_DIR, 'alipay/app_public_key.pem')).read()
+
+"""
+==============支付宝配置=================
+"""
 
