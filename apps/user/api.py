@@ -1,6 +1,8 @@
 import re
 from threading import Thread
-from flask import session, request
+
+from alipay import AliPay
+from flask import session, request, redirect
 from flask_restful import Resource, reqparse
 from apps import config
 from apps.config import R
