@@ -64,7 +64,7 @@ class OrderItem(db.Model):
     # 外键  关联User用户表
     uid = db.Column(db.Integer, db.ForeignKey(User.uid, ondelete="CASCADE"))
     # 所购买的商品id
-    good_id = db.Column(db.String(32))
+    good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id))
     # 商品数量
     good_quantity = db.Column(db.Integer)
 
