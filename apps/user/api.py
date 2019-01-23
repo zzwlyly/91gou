@@ -1,13 +1,15 @@
 import re
 
+from flask import session, request
 from flask_restful import Resource, reqparse
-
+from apps.config import R
 from apps.ext import db
+from apps.user.field import UserFields
+from apps.utils.response_result import to_response_success
 
 __author__ = 'zhanjiahuan'
 __date__ = '2019/1/21 10:58'
 
-from flask import render_template, request, flash, Blueprint, redirect
 from flask_login import login_user, login_required, logout_user
 
 from apps.user.models import User
@@ -18,9 +20,11 @@ parser = reqparse.RequestParser()
 class LoginResource(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('username', type=str, location='form')
-        self.parser.add_argument('password', type=str, location='form')
+        self.parser.add_argument('username', type=str)
+        self.parser.add_argument('password', type=str)
+        self.parser.add_argument("id_session", type=int)
 
+    # 实现手机,账号,邮箱都能登录
     def check_name(self, username):
         check_username = re.compile(r"^(?=.*?[a-z])\w{8,16}$")
         check_phone = re.compile(r"(^(13\d|14[57]|15[^4\D]|17[13678]|18\d)\d{8}|170[^346\D]\d{7})$")
@@ -36,24 +40,29 @@ class LoginResource(Resource):
             return user
 
     def post(self):
-        # global user
         data = self.parser.parse_args()
+        # 前端携带session_id,核对redis,有就直接免密登录,没有就正常登录并保存session
+        uid = data.get("id_session")
         username = data.get("username")
         password = data.get("password")
-        # 判断用户登录类型(账号,手机,邮箱)
-        user = self.check_name(username)
-        if user:
-            if user.verify_password(password):
-                login_user(user, remember=True)
-                return redirect('http://localhost:63343/91gou/main/main.html')
-                # return 'login success!'
-            else:
-
-                return redirect('http://localhost:63343/91gou/main/login.html')
-                # return 'login error~'
+        if uid and R.sismember("user_session", uid):
+            user = User.query.filter(User.uid == uid)
+            login_user(user, remember=True)
+            return "直接跳转首页"
         else:
-            return redirect('http://localhost:63343/91gou/main/login.html')
-            # return 'user not exist~'
+            # 判断用户登录类型(账号,手机,邮箱)
+            user = self.check_name(username)
+            if user:
+                if user.verify_password(password):
+                    login_user(user, remember=True)
+                    R.sadd("user_sessions", user.uid)
+                    R.expire("user_sessions", 24 * 60 * 60)
+                    data = user.uid
+                    return to_response_success(data=data, fields=UserFields.result_fields)
+                else:
+                    return 'login error~'
+            else:
+                return 'user not exist~'
 
 
 class RegisterResource(Resource):
@@ -87,8 +96,8 @@ class RegisterResource(Resource):
                     user.password = password
                     db.session.add(user)
                     db.session.commit()
-                    # flash("注册成功!请登录!")
-                    return "success"
+                    data = "注册成功!请跳转登录页面!"
+                    return to_response_success(data=data, fields=UserFields.result_fields)
                 else:
                     # flash("请按正确的格式填写内容!")
                     return 'format error~'
