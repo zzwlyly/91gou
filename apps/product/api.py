@@ -8,18 +8,18 @@ from apps.utils.response_result import to_response_success
 class GoodsResource(Resource):
     def get(self):
         goods = Goods.query.all()
-        skus = GoodsSKU.query.all()
-        spus = GoodsSPU.query.all()
-        imgs = GoodsImages.query.all()
+        # skus = GoodsSKU.query.all()
+        # spus = GoodsSPU.query.all()
+        # imgs = GoodsImages.query.all()
 
-        data_fields = {
-            'goods': goods,
-            'sku': skus,
-            'spu': spus,
-            'img': imgs,
-        }
+        # data_fields = {
+        #     'goods': goods,
+        #     'sku': skus,
+        #     'spu': spus,
+        #     'img': imgs,
+        # }
 
-        return to_response_success(data=data_fields, fields=GoodsFields.result_fields)
+        return to_response_success(data=goods, fields=GoodsFields.result_fields)
 
         # good_fields = []
         # sku_fields=[]

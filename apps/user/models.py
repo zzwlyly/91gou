@@ -21,11 +21,12 @@ class User(db.Model):
     is_active = db.Column(db.Integer,default=0)
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
-    # appraise = db.relationship("Appraise", backref="user", lazy="dynamic")
-    # address = db.relationship("Address", backref="user", lazy="dynamic")
-    # orders = db.relationship("Orders", backref="user", lazy="dynamic")
-    # order_refunds = db.relationship("OrderRefunds", backref="user", lazy="dynamic")
-    # cart_item = db.relationship("CartItem", backref="user", lazy="dynamic")
+    appraise = db.relationship("Appraise", backref="user", lazy="dynamic")
+
+    address = db.relationship("Address", backref="user", lazy="dynamic")
+    orders = db.relationship("Orders", backref="user", lazy="dynamic")
+    order_refunds = db.relationship("OrderRefunds", backref="user", lazy="dynamic")
+    cart_item = db.relationship("CartItem", backref="user", lazy="dynamic")
 
     def get_id(self):
         return self.uid
