@@ -58,9 +58,8 @@ class LoginResource(Resource):
                 if user.verify_password(password):
                     R.sadd("user_sessions", user.uid)
                     R.expire("user_sessions", 24 * 60 * 60)
-
-                    user = User.query.filter(User.uid == id).all()
-                    address = Address.query.filter(Address.uid == id).all()
+                    user = User.query.get(id)
+                    address = user.address.all()
                     user_safe = UserSafe.query.filter(UserSafe.uid == id).all()
                     vip = Vip.query.filter(Vip.uid == id).all()
                     data = {
@@ -175,17 +174,4 @@ class AliPayResource(Resource):
         return redirect(config.PAY_URL_DEV + '?' + order_str)
 
 
-class Test(Resource):
-    def get(self):
-        id = 1
-        user = User.query.get(id)
-        address = user.address.all()
-        user_safe = UserSafe.query.filter(UserSafe.uid == id).all()
-        vip = Vip.query.filter(Vip.uid == id).all()
-        data = {
-            "user": user,
-            "address": address,
-            "user_safe": user_safe,
-            "vip": vip,
-        }
-        return to_response_success(data=data, fields=UserMessageFields.result_fields)
+
