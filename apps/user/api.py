@@ -13,9 +13,7 @@ from apps.utils.response_result import to_response_success
 __author__ = 'zhanjiahuan'
 __date__ = '2019/1/21 10:58'
 
-from flask_login import login_user
-
-from apps.user.models import User, Address, Vip, UserSafe
+from apps.user.models import User, Vip, UserSafe, Address
 
 parser = reqparse.RequestParser()
 
@@ -37,7 +35,8 @@ class LoginResource(Resource):
         if uid and R.sismember("user_sessions", uid):
             self.uid = uid
             # todo 返回数据
-            return redirect('http://localhost:63343/91gou/main/main.html')
+            # return redirect('http://localhost:63343/91gou/main/main.html')
+            return to_response_success(data=data, fields=UserMessageFields.result_fields)
         else:
             # 判断用户登录类型(账号,手机,邮箱)
             user = self.check_name(username)
@@ -47,18 +46,8 @@ class LoginResource(Resource):
                 if user.verify_password(password):
                     R.sadd("user_sessions", user.uid)
                     R.expire("user_sessions", 24 * 60 * 60)
-                    user = User.query.get(id)
-                    address = user.address.all()
-                    user_safe = UserSafe.query.filter(UserSafe.uid == id).all()
-                    vip = Vip.query.filter(Vip.uid == id).all()
-
-                    data = {
-                        "user": user,
-                        "address": address,
-                        "user_safe": user_safe,
-                        "vip": vip,
-                    }
-                    return to_response_success(data=data, fields=UserMessageFields.result_fields)
+                    user_data = User.query.filter(User.uid == id).first()
+                    return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
                 else:
                     return 'login error~'
             else:
@@ -179,4 +168,107 @@ class AliPayResource(Resource):
         return redirect(config.PAY_URL_DEV + '?' + order_str)
 
 
+class InformationUser(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('nick_name', type=str)
+        self.parser.add_argument('username', type=str)
+        self.parser.add_argument('sex', type=int)
+        self.parser.add_argument('birthday', type=str)
+        self.parser.add_argument('telephone', type=str)
+        self.parser.add_argument('email', type=str)
+        self.uid = None
 
+    def post(self):
+        data = self.parser.parse_args()
+        session_id = data.get('session_id')
+        nick_name = data.get('nick_name')
+        username = data.get('username')
+        sex = data.get('sex')
+        birthday = data.get('birthday')
+        telephone = data.get('telephone')
+        email = data.get('email')
+        check_username = re.compile(r"^(?=.*?[a-z])\w{8,16}$")
+        check_phone = re.compile(r"(^(13\d|14[57]|15[^4\D]|17[13678]|18\d)\d{8}|170[^346\D]\d{7})$")
+        check_email = re.compile(r"^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")
+        try:
+            if session_id and R.sismember("user_sessions", session_id):
+                self.uid = session_id
+                uid = self.uid
+                users = User.query.filter(User.uid == uid,
+                                          User.nick_name == nick_name,
+                                          User.username == username,
+                                          User.sex == sex,
+                                          User.telephone == telephone,
+                                          User.birthday == birthday,
+                                          User.email == email
+                                          ).first()
+                if nick_name or username or sex or telephone or birthday or email:
+                    if not users:
+                        if check_username.match(username) and check_phone.match(telephone) and check_email.match(email):
+                            user = User.query.filter_by(User.uid == uid).update({'nick_name': nick_name,
+                                                                                 'username': username,
+                                                                                 'sex': sex,
+                                                                                 'birthday': birthday,
+                                                                                 'telephone': telephone,
+                                                                                 'email': email})
+                            db.session.sommit()
+                            data = "个人信息修改成功!请跳转登录页面!"
+                            return to_response_success(data=data, fields=UserLoginFields.result_fields)
+                        else:
+                            return 'information error'
+                    else:
+                        return 'nothing update'
+                else:
+                    return 'not information'
+            else:
+                return 'user not find'
+        except Exception as e:
+            print(e)
+
+
+class AddressUser(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('name', type=str)
+        self.parser.add_argument('phone', type=str)
+        self.parser.add_argument('detail', type=str)
+        self.parser.add_argument('address', type=str)
+        self.uid = None
+
+    def post(self):
+        data = self.parser.parse_args()
+        session_id = data.get('session_id')
+        name = data.get('name')
+        phone = data.get('phone')
+        detail = data.get('detail')
+        address = data.get('address')
+        check_phone = re.compile(r"(^(13\d|14[57]|15[^4\D]|17[13678]|18\d)\d{8}|170[^346\D]\d{7})$")
+        try:
+            if session_id and R.sismember("user_sessions", session_id):
+                self.uid = session_id
+                uid = self.uid
+                adr = Address.query.filter(Address.uid == uid,
+                                           Address.name == name,
+                                           Address.phone == phone,
+                                           Address.detail == detail,
+                                           Address.address == address)
+                if not adr:
+                    if check_phone.match(phone):
+                        addre = Address(uid=uid,
+                                        name=name,
+                                        phone=phone,
+                                        detail=detail,
+                                        address=address)
+                        db.session.add(addre)
+                        db.session.commit()
+                        data = "收货地址成功!请跳转登录页面!"
+                        return to_response_success(data=data, fields=UserLoginFields.result_fields)
+                    else:
+                        return 'format error'
+                else:
+                    return "address is exist~"
+            else:
+                return 'user not find'
+        except Exception as e:
+            print(e)
