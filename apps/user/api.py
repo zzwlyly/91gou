@@ -26,6 +26,43 @@ class LoginResource(Resource):
         self.parser.add_argument('username', type=str)
         self.parser.add_argument('password', type=str)
         self.parser.add_argument("id_session", type=int)
+        self.uid = None
+
+    def post(self):
+        data = self.parser.parse_args()
+        # 前端携带session_id,核对redis,有就直接免密登录,没有就正常登录并保存session
+        uid = data.get("id_session")
+        username = data.get("username")
+        password = data.get("password")
+        if uid and R.sismember("user_sessions", uid):
+            self.uid = uid
+            # todo 返回数据
+            return redirect('http://localhost:63343/91gou/main/main.html')
+        else:
+            # 判断用户登录类型(账号,手机,邮箱)
+            user = self.check_name(username)
+            id = user.uid
+            self.uid = id
+            if user:
+                if user.verify_password(password):
+                    R.sadd("user_sessions", user.uid)
+                    R.expire("user_sessions", 24 * 60 * 60)
+                    user = User.query.get(id)
+                    address = user.address.all()
+                    user_safe = UserSafe.query.filter(UserSafe.uid == id).all()
+                    vip = Vip.query.filter(Vip.uid == id).all()
+
+                    data = {
+                        "user": user,
+                        "address": address,
+                        "user_safe": user_safe,
+                        "vip": vip,
+                    }
+                    return to_response_success(data=data, fields=UserMessageFields.result_fields)
+                else:
+                    return 'login error~'
+            else:
+                return 'user not exist~'
 
     # 实现手机,账号,邮箱都能登录
     def check_name(self, username):
@@ -41,38 +78,6 @@ class LoginResource(Resource):
         elif check_email.match(username):
             user = User.query.filter(User.email == username).first()
             return user
-
-    def post(self):
-        data = self.parser.parse_args()
-        # 前端携带session_id,核对redis,有就直接免密登录,没有就正常登录并保存session
-        uid = data.get("id_session")
-        username = data.get("username")
-        password = data.get("password")
-        if uid and R.sismember("user_sessions", uid):
-            return "go to main"
-        else:
-            # 判断用户登录类型(账号,手机,邮箱)
-            user = self.check_name(username)
-            id = user.uid
-            if user:
-                if user.verify_password(password):
-                    R.sadd("user_sessions", user.uid)
-                    R.expire("user_sessions", 24 * 60 * 60)
-                    user = User.query.get(id)
-                    address = user.address.all()
-                    user_safe = UserSafe.query.filter(UserSafe.uid == id).all()
-                    vip = Vip.query.filter(Vip.uid == id).all()
-                    data = {
-                        "user": user,
-                        "address": address,
-                        "user_safe": user_safe,
-                        "vip": vip,
-                    }
-                    return to_response_success(data=data, fields=UserMessageFields.result_fields)
-                else:
-                    return 'login error~'
-            else:
-                return 'user not exist~'
 
 
 class RegisterResource(Resource):
