@@ -5,16 +5,11 @@ from apps.main.models import GoodNav, GoodCategory
 from apps.utils.response_result import to_response_success, to_response_error
 
 
-class MainResource(Resource):
-    def get(self):
-        # good_nav = GoodNav.query.all()
-        return 'main'
-
-
 class MainNavResource(Resource):
     '''
     导航api
     '''
+
     def get(self):
 
         try:
@@ -37,6 +32,7 @@ class MainCategoryResource(Resource):
     '''
     分类api
     '''
+
     def get(self):
         try:
             cates = GoodCategory.query.all()

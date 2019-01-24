@@ -56,7 +56,7 @@ class DeveloperConfig(BaseConfig):
     database = {
         'ENGINE': 'mysql',
         'DB_NAME': '91gou',
-        'PASSWORD': '123456'
+        'PASSWORD': 'zzw12345'
     }
 
     # 打印sql语句

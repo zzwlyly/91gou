@@ -37,7 +37,7 @@ class GoodNav(db.Model):
     sort = db.Column(db.Integer)  # 排序
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    # good_category = db.relationship("GoodCategory", backref="good_nav", lazy="dynamic")
+    good_category = db.relationship("GoodCategory", backref="good_nav", lazy="dynamic")
 
 
 # 商品分类
