@@ -9,6 +9,7 @@ from apps.user.api import RegisterResource, LoginResource, AliPayResource
 from apps.product.api import GoodsResource, GoodsMainResource
 from apps.user.api import RegisterResource, LoginResource
 from apps.user.api import RegisterResource, LoginResource, AliPayResource
+from apps.user.api import RegisterResource, LoginResource, AliPayResource, InformationUser, AddressUser
 
 api = Api(prefix='/api/v1')
 
@@ -30,3 +31,5 @@ api.add_resource(RegisterResource, '/register/')
 api.add_resource(LoginResource, '/login/')
 api.add_resource(AliPayResource, '/alipay/')
 
+api.add_resource(InformationUser, '/information/')
+api.add_resource(AddressUser, '/address/')

@@ -18,7 +18,7 @@ class User(db.Model):
     email = db.Column(db.String(64))
     flag = db.Column(db.Integer)  # 0 用户 1 商家
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
-    is_active = db.Column(db.Integer,default=0)
+    is_active = db.Column(db.Integer, default=0)
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
     appraise = db.relationship("Appraise", backref="user", lazy="dynamic")

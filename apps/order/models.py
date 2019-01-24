@@ -67,6 +67,7 @@ class OrderItem(db.Model):
     good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id))
     # 商品数量
     good_quantity = db.Column(db.Integer)
+    goods = db.relationship("Goods", backref="order_item")
 
 
 # 订单退款退货表
