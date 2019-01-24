@@ -5,7 +5,7 @@ from apps.cart.api import CartResource
 from apps.main.api import MainNavResource, MainCategoryResource
 from apps.order.api import OrdersResource
 from apps.product.api import GoodsResource
-from apps.user.api import RegisterResource, LoginResource, AliPayResource, Test
+from apps.user.api import RegisterResource, LoginResource, AliPayResource
 from apps.product.api import GoodsResource, GoodsMainResource
 from apps.user.api import RegisterResource, LoginResource
 from apps.user.api import RegisterResource, LoginResource, AliPayResource
@@ -29,4 +29,4 @@ api.add_resource(GoodsMainResource, '/goods/main/')
 api.add_resource(RegisterResource, '/register/')
 api.add_resource(LoginResource, '/login/')
 api.add_resource(AliPayResource, '/alipay/')
-api.add_resource(Test, '/test/')
+
