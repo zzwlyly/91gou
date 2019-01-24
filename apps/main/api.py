@@ -1,7 +1,8 @@
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 
 from apps.main.field import MainNavFields, MainCategoryFields
 from apps.main.models import GoodNav, GoodCategory
+from apps.product.models import Goods
 from apps.utils.response_result import to_response_success, to_response_error
 
 
@@ -40,3 +41,22 @@ class MainCategoryResource(Resource):
         except Exception as e:
             print(e)
             return to_response_error()
+
+
+class SearchResource(Resource):
+    '''
+    搜索APi
+    '''
+
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('kw', type=str)
+        super().__init__()
+
+    def get(self):
+        kw = self.parser.parse_args().get('kw')
+
+        # 1. 模糊查询到所有关键字相关数据 在Goods表
+        # goods = Goods
+
+
