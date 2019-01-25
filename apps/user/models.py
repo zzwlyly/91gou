@@ -2,9 +2,11 @@ import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from apps.ext import db
 
+from flask_login import UserMixin
+
 
 # 用户表
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "user"
     uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(64), nullable=False, unique=True)

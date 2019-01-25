@@ -1,8 +1,6 @@
-import datetime
+
 import os
-
 import redis
-
 BASE_DIR = os.path.dirname(__file__)
 UPLOAD_ROOT_PATH = os.path.join(BASE_DIR, 'static/upload/')
 
@@ -56,7 +54,7 @@ class DeveloperConfig(BaseConfig):
     database = {
         'ENGINE': 'mysql',
         'DB_NAME': '91gou',
-        'PASSWORD': 'zzw12345'
+        'PASSWORD': '123456'
     }
 
     # 打印sql语句

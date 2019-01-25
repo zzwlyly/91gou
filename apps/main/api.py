@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 
-from apps.main.field import MainNavFields, MainCategoryFields
+from apps.main.field import MainNavFields, MainCategoryFields, SearchFields
 from apps.main.models import GoodNav, GoodCategory
 from apps.product.models import Goods
 from apps.utils.response_result import to_response_success, to_response_error
@@ -43,6 +43,19 @@ class MainCategoryResource(Resource):
             return to_response_error()
 
 
+    # def __init__(self):
+    #     self.parser = reqparse.RequestParser()
+    #     self.parser.add_argument('page', type=int, default=1)
+    #     self.parser.add_argument('size', type=int, default=10)
+    #
+    # # 总页数  总条数
+    # def get(self):
+    #     args = self.parser.parse_args()
+    #     pagination = Movie.query.paginate(page=args.get('page'), per_page=args.get('size'), error_out=False)
+    #     data = {'movies': pagination.items, 'pagination': pagination}
+    #     return to_response_success(data=data, fields=MoviesFields.result_fields)
+
+
 class SearchResource(Resource):
     '''
     搜索APi
@@ -55,6 +68,9 @@ class SearchResource(Resource):
 
     def get(self):
         kw = self.parser.parse_args().get('kw')
+        goods = Goods.query.filter(Goods.good_desc.like(f'%{kw}%')).all()
+        return to_response_success(data=goods,fields=SearchFields.result_fields)
+
 
         # 1. 模糊查询到所有关键字相关数据 在Goods表
         # goods = Goods

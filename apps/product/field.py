@@ -57,3 +57,6 @@ class GoodsMainFields:
         'msg': fields.String(default=RESPONSE_SUCCESS_MSG),
         'data': fields.List(fields.Nested(data_fields))
     }
+
+
+

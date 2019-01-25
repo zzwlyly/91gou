@@ -1,24 +1,18 @@
+__author__ = 'zhanjiahuan'
+__date__ = '2019/1/21 10:58'
 import re
-from threading import Thread
-
 from alipay import AliPay
-from flask import session, request, redirect
+from flask import redirect
 from flask_restful import Resource, reqparse
 from apps import config
 from apps.config import R
 from apps.ext import db
-from apps.user.field import UserLoginFields, UserMessageFields
+from apps.user.field import UserMessageFields
 from apps.utils.response_result import to_response_success
+from apps.user.models import User, Vip, UserSafe
 
-__author__ = 'zhanjiahuan'
-__date__ = '2019/1/21 10:58'
 
-from flask_login import login_user
-
-from apps.user.models import User, Address, Vip, UserSafe
-
-parser = reqparse.RequestParser()
-
+# 登录
 
 class LoginResource(Resource):
     def __init__(self):
@@ -111,8 +105,7 @@ class RegisterResource(Resource):
                     user.password = password
                     db.session.add(user)
                     db.session.commit()
-                    data = "注册成功!请跳转登录页面!"
-                    return to_response_success(data=data, fields=UserLoginFields.result_fields)
+                    return redirect("http://localhost:63343/91gou_html/main/login.html")
                 else:
                     # flash("请按正确的格式填写内容!")
                     return 'format error~'
@@ -177,6 +170,3 @@ class AliPayResource(Resource):
             return_url='https:www.baidu.com',
         )
         return redirect(config.PAY_URL_DEV + '?' + order_str)
-
-
-
