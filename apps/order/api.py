@@ -45,6 +45,7 @@ class OrdersResource(Resource):
                     user_ads = Address.query.filter(Address.uid == uid and Address.is_delete == 1).first()
                     aid = user_ads.aid
 
+                    # todo 根据所有商品id查到订单表需要的商品内容并添加
                     # 保存数据到order表
                     new_order = Orders(oid=oid, uid=uid, aid=aid)
                     db.session.add(new_order)

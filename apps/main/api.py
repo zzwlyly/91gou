@@ -37,6 +37,8 @@ class MainCategoryResource(Resource):
     def get(self):
         try:
             cates = GoodCategory.query.all()
+            # goods = cates.goods
+            # print(goods)
             return to_response_success(data=cates, fields=MainCategoryFields.result_fields)
         except Exception as e:
             print(e)
@@ -75,8 +77,4 @@ class SearchResource(Resource):
     def get(self):
         kw = self.parser.parse_args().get('kw')
         goods = Goods.query.filter(Goods.good_desc.like(f'%{kw}%')).all()
-        return to_response_success(data=goods,fields=SearchFields.result_fields)
-
-
-
-
+        return to_response_success(data=goods, fields=SearchFields.result_fields)

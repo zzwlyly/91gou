@@ -21,6 +21,24 @@ class GoodsFields:
     img_fields = {
         'img': fields.String,
     }
+
+    user_fields = {
+        'username': fields.String,
+        'user_photo': fields.String,
+    }
+
+    appraise_fields = {
+        'rating': fields.Integer,
+        'appraise_desc': fields.String,
+        'img2': fields.String,
+        'img3': fields.String,
+        'img4': fields.String,
+        'img5': fields.String,
+        'img6': fields.String,
+        'create_time':fields.DateTime,
+        'user': fields.Nested(user_fields),
+    }
+
     # 数据结构的键名是模型字段名
     data_fields = {
         'cid': fields.Integer,
@@ -32,7 +50,7 @@ class GoodsFields:
         'goods_sku': fields.List(fields.Nested(sku_fields)),
         'goods_spu': fields.List(fields.Nested(spu_fields)),
         'goods_img': fields.List(fields.Nested(img_fields)),
-        'appraise': fields.List(fields.Nested(UserMessageFields.appraise_fields)),
+        'appraise': fields.List(fields.Nested(appraise_fields)),
     }
 
     result_fields = {
@@ -43,7 +61,6 @@ class GoodsFields:
 
 
 class GoodsMainFields:
-
     # 数据结构的键名是模型字段名
     data_fields = {
         'cid': fields.Integer,
@@ -59,6 +76,3 @@ class GoodsMainFields:
         'msg': fields.String(default=RESPONSE_SUCCESS_MSG),
         'data': fields.List(fields.Nested(data_fields))
     }
-
-
-

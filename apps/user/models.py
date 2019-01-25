@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     birthday = db.Column(db.DateTime)
     telephone = db.Column(db.String(64))
     email = db.Column(db.String(64))
-    flag = db.Column(db.Integer)  # 0 用户 1 商家
+    flag = db.Column(db.Integer)  # 0 未登录 1 登录
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     is_active = db.Column(db.Integer, default=0)
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())

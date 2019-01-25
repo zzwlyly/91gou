@@ -8,7 +8,7 @@ class CartResource(Resource):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('uid', type=str)
         self.parser.add_argument('good_id', type=str)
-        self.parser.add_argument('quantity', type=int)
+        self.parser.add_argument('quantity', type=int, default=1)
 
     def get(self):
         items = CartItem.query.all()

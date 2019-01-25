@@ -5,10 +5,9 @@ from flask_restful import Resource, reqparse
 from apps import config
 from apps.config import R
 from apps.ext import db
-from apps.user.field import UserMessageFields
-from apps.utils.response_result import to_response_success
+from apps.user.field import UserMessageFields, UserLoginFields
+from apps.utils.response_result import to_response_success, to_response_error
 from apps.user.models import User, Vip, UserSafe
-
 
 # 登录
 from apps.user.models import User, Vip, UserSafe, Address
@@ -39,15 +38,20 @@ class LoginResource(Resource):
             # 判断用户登录类型(账号,手机,邮箱)
             user = self.check_name(username)
             uid = user.uid
+
             # self.uid = id
             if user:
                 if user.verify_password(password):
                     R.sadd("user_sessions", user.uid)
                     R.expire("user_sessions", 24 * 60 * 60)
+                    # 更新用户状态 1 登录 0未登录
+                    user.flag = 1
+                    db.session.commit()
+                    flag = user.flag
                     # user_data = User.query.filter(User.uid == id).first()
                     # return redirect(f'http://127.0.0.1:5000/api/v1/login/response/?uid={id}')
                     # return f'http://127.0.0.1:5000/api/v1/login/response/?uid={uid}'
-                    return uid
+                    return [uid, flag]
                     # return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
                 else:
                     return 'login error~'
@@ -74,12 +78,35 @@ class LoginResponseResource(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('uid', type=int)
+        self.parser.add_argument('flag', type=int)
         super().__init__()
 
     def post(self):
         uid = self.parser.parse_args().get("uid")
-        user_data = User.query.filter(User.uid == uid).first()
-        return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
+        flag = self.parser.parse_args().get("flag")
+        try:
+            if uid and flag == 1:
+                user_data = User.query.filter(User.uid == uid, User.flag == flag).first()
+                return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
+        except Exception as e:
+            print(e)
+            return to_response_error()
+
+
+class LogoutResource(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('uid', type=int)
+        super().__init__()
+
+    def post(self):
+        uid = self.parser.parse_args().get("uid")
+        try:
+            user = User.query.filter(User.uid == uid).first()
+            user.flag = 0
+            db.session.commit()
+        except Exception as e:
+            print(e)
 
 
 class RegisterResource(Resource):
@@ -109,11 +136,15 @@ class RegisterResource(Resource):
             if not users:
                 if check_username.match(user_name) and check_password.match(password) and \
                         check_phone.match(phone) and check_email.match(email):
-                    user = User(username=user_name, email=email, telephone=phone)
+                    user = User(username=user_name, email=email, telephone=phone, flag=1)
                     user.password = password
                     db.session.add(user)
                     db.session.commit()
-                    return redirect("http://localhost:63343/91gou_html/main/login.html")
+                    uid = user.uid
+                    flag = user.flag
+                    # todo 注册完跳主页面登录，暂时跳登录页面
+                    # return [uid, flag]
+                    return redirect("http://localhost:63343/91gou/main/login.html")
                 else:
                     # flash("请按正确的格式填写内容!")
                     return 'format error~'
