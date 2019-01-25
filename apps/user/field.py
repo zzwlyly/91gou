@@ -1,5 +1,6 @@
 from flask_restful import fields
 
+from apps.order.field import OrdersFields
 from apps.utils.constant import RESPONSE_SUCCESS_STATUS, RESPONSE_SUCCESS_MSG
 
 __author__ = 'zhanjiahuan'
@@ -49,11 +50,14 @@ class UserMessageFields:
         'vip_level': fields.Integer,
         'vip_score': fields.Integer,
     }
+
     data_fields = {
         'user': fields.List(fields.Nested(user_fields)),
         'address': fields.List(fields.Nested(address_fields)),
         'user_safe': fields.List(fields.Nested(user_safe_fields)),
         'vip': fields.List(fields.Nested(vip_fields)),
+        'orders': fields.List(fields.Nested(OrdersFields.order_fields)),
+        'cart_item': fields.List(fields.Nested(OrdersFields.order_fields)),
     }
     result_fields = {
         'status': fields.Integer(default=RESPONSE_SUCCESS_STATUS),

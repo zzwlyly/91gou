@@ -1,12 +1,10 @@
 from flask_restful import Api
-
 from apps.appraise.api import AppraiseResource
 from apps.cart.api import CartResource
 from apps.main.api import MainNavResource, MainCategoryResource, SearchResource
 from apps.order.api import OrdersResource
-from apps.product.api import GoodsResource
-from apps.user.api import RegisterResource, LoginResource, AliPayResource
 from apps.product.api import GoodsResource, GoodsMainResource
+from apps.user.api import RegisterResource, LoginResource, AliPayResource, InformationUser, AddressUser
 from apps.user.api import RegisterResource, LoginResource
 from apps.user.api import RegisterResource, LoginResource, AliPayResource
 from apps.user.api import RegisterResource, LoginResource, AliPayResource
