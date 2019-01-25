@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from apps.user.field import UserMessageFields
 from apps.utils.constant import RESPONSE_SUCCESS_STATUS, RESPONSE_SUCCESS_MSG
 
 __date__ = "2019/1/21 12:07"
@@ -31,6 +32,7 @@ class GoodsFields:
         'goods_sku': fields.List(fields.Nested(sku_fields)),
         'goods_spu': fields.List(fields.Nested(spu_fields)),
         'goods_img': fields.List(fields.Nested(img_fields)),
+        'appraise': fields.List(fields.Nested(UserMessageFields.appraise_fields)),
     }
 
     result_fields = {

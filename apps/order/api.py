@@ -14,13 +14,13 @@ class OrdersResource(Resource):
         self.parser.add_argument('uid', type=int)
         self.parser.add_argument('cart_id', type=int)
 
-    def get(self):
+    # def get(self):
         # 返回订单数据
         # order = Orders.query.filter(Orders.oid == 124292935).first()
-        order = Orders.query.filter(Orders.uid == 1).all()
+        # order = Orders.query.filter(Orders.uid == 1).all()
         # order_items = OrderItem.query.filter(OrderItem.uid == uid).all()
 
-        return to_response_success(data=order, fields=OrdersFields.result_fields)
+        # return to_response_success(data=order, fields=OrdersFields.result_fields)
         # uid = self.parser.parse_args().get('uid')
         # try:
         #     order_item = OrderItem.query.filter(OrderItem.uid == uid).all()

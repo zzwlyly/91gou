@@ -17,8 +17,9 @@ class OrdersFields:
 
     items_fields = {
         'good_quantity': fields.String,
-        'goods': fields.List(fields.Nested(goods_fields))
+        'goods': fields.Nested(goods_fields)
     }
+
     order_fields = {
         'oid': fields.Integer,
         'create_time': fields.DateTime,

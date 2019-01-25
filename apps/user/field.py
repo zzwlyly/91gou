@@ -16,18 +16,17 @@ class UserLoginFields:
 
 
 class UserMessageFields:
-    user_fields = {
-        'username': fields.String,
-        'user_photo': fields.String,
-        'nick_name': fields.String,
-        'name': fields.String,
-        'sex': fields.Integer,  # 0男,1女
-        'birthday': fields.DateTime,
-        'telephone': fields.String,
-        'email': fields.String,
-        'flag': fields.Integer,  # 0 用户 1 商家
-
-    }
+    # user_fields = {
+    #     'username': fields.String,
+    #     'user_photo': fields.String,
+    #     'nick_name': fields.String,
+    #     'name': fields.String,
+    #     'sex': fields.Integer,  # 0男,1女
+    #     'birthday': fields.DateTime,
+    #     'telephone': fields.String,
+    #     'email': fields.String,
+    #     'flag': fields.Integer,  # 0 用户 1 商家
+    # }
     address_fields = {
 
         'name': fields.String,
@@ -51,14 +50,44 @@ class UserMessageFields:
         'vip_score': fields.Integer,
     }
 
+    appraise_fields = {
+        'good_id': fields.String,
+        'rating': fields.Integer,
+        'appraise_desc': fields.String,
+        'img2': fields.String,
+        'img3': fields.String,
+        'img4': fields.String,
+        'img5': fields.String,
+        'img6': fields.String,
+    }
+
+    cart_item_fields = {
+        'cart_id':fields.Integer,
+        'good_id':fields.String,
+        'good_quantity':fields.Integer,
+        'flag':fields.Integer,
+        'goods': fields.Nested(OrdersFields.goods_fields)
+    }
+
     data_fields = {
-        'user': fields.List(fields.Nested(user_fields)),
+        'username': fields.String,
+        'user_photo': fields.String,
+        'nick_name': fields.String,
+        'name': fields.String,
+        'sex': fields.Integer,  # 0男,1女
+        'birthday': fields.DateTime,
+        'telephone': fields.String,
+        'email': fields.String,
+        'flag': fields.Integer,  # 0 用户 1 商家
+        # 'user': fields.List(fields.Nested(user_fields)),
         'address': fields.List(fields.Nested(address_fields)),
         'user_safe': fields.List(fields.Nested(user_safe_fields)),
         'vip': fields.List(fields.Nested(vip_fields)),
+        'appraise': fields.List(fields.Nested(appraise_fields)),
         'orders': fields.List(fields.Nested(OrdersFields.order_fields)),
-        'cart_item': fields.List(fields.Nested(OrdersFields.order_fields)),
+        'cart_item': fields.List(fields.Nested(cart_item_fields)),
     }
+
     result_fields = {
         'status': fields.Integer(default=RESPONSE_SUCCESS_STATUS),
         'msg': fields.String(default=RESPONSE_SUCCESS_MSG),

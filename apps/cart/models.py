@@ -14,8 +14,10 @@ class CartItem(db.Model):
 
     good_id = db.Column(db.String(32), db.ForeignKey(Goods.good_id))
     good_quantity = db.Column(db.Integer)  # 商品数量
-    flag = db.Column(db.Integer, default=1)  # 0:未结算 1:已结算
+    flag = db.Column(db.Integer, default=1)  # 0:已结算 1:未结算
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+
+    goods = db.relationship("Goods", backref="cart_item")
 
 
 class CartOrder(db.Model):

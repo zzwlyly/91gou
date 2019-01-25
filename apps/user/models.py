@@ -22,7 +22,6 @@ class User(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
 
     appraise = db.relationship("Appraise", backref="user", lazy="dynamic")
-
     address = db.relationship("Address", backref="user", lazy="dynamic")
     user_safe = db.relationship("UserSafe", backref="user", lazy="dynamic")
     vip = db.relationship("Vip", backref="user", lazy="dynamic")

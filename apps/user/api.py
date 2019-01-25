@@ -24,30 +24,33 @@ class LoginResource(Resource):
         self.parser.add_argument('username', type=str)
         self.parser.add_argument('password', type=str)
         self.parser.add_argument("id_session", type=int)
-        self.uid = None
+        # self.uid = None
 
     def post(self):
         data = self.parser.parse_args()
         # 前端携带session_id,核对redis,有就直接免密登录,没有就正常登录并保存session
-        uid = data.get("id_session")
+        id_session = data.get("id_session")
         username = data.get("username")
         password = data.get("password")
-        if uid and R.sismember("user_sessions", uid):
-            self.uid = uid
+        if id_session and R.sismember("user_sessions", id_session):
+            # self.uid = uid
             # todo 返回数据
-            # return redirect('http://localhost:63343/91gou/main/main.html')
-            return to_response_success(data=data, fields=UserMessageFields.result_fields)
+            return redirect('http://localhost:63343/91gou/main/main.html')
+            # return to_response_success(data=data, fields=UserMessageFields.result_fields)
         else:
             # 判断用户登录类型(账号,手机,邮箱)
             user = self.check_name(username)
-            id = user.uid
-            self.uid = id
+            uid = user.uid
+            # self.uid = id
             if user:
                 if user.verify_password(password):
                     R.sadd("user_sessions", user.uid)
                     R.expire("user_sessions", 24 * 60 * 60)
-                    user_data = User.query.filter(User.uid == id).first()
-                    return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
+                    # user_data = User.query.filter(User.uid == id).first()
+                    # return redirect(f'http://127.0.0.1:5000/api/v1/login/response/?uid={id}')
+                    # return f'http://127.0.0.1:5000/api/v1/login/response/?uid={uid}'
+                    return uid
+                    # return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
                 else:
                     return 'login error~'
             else:
@@ -67,6 +70,18 @@ class LoginResource(Resource):
         elif check_email.match(username):
             user = User.query.filter(User.email == username).first()
             return user
+
+
+class LoginResponseResource(Resource):
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('uid', type=int)
+        super().__init__()
+
+    def post(self):
+        uid = self.parser.parse_args().get("uid")
+        user_data = User.query.filter(User.uid == uid).first()
+        return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
 
 
 class RegisterResource(Resource):

@@ -31,13 +31,32 @@ class MainNavResource(Resource):
 
 class MainCategoryResource(Resource):
     '''
-    分类api
+    首页商品api
     '''
 
     def get(self):
         try:
             cates = GoodCategory.query.all()
             return to_response_success(data=cates, fields=MainCategoryFields.result_fields)
+        except Exception as e:
+            print(e)
+            return to_response_error()
+
+
+class CategoryResource(Resource):
+    '''
+    分类api
+    '''
+
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('nid', type=int)
+
+    def get(self):
+        try:
+            nid = self.parser.parse_args().get('nid')
+            cate = GoodCategory.query.filter(GoodCategory.nid == nid).first()
+            return to_response_success(data=cate, fields=MainCategoryFields.result_fields)
         except Exception as e:
             print(e)
             return to_response_error()
@@ -58,5 +77,3 @@ class SearchResource(Resource):
 
         # 1. 模糊查询到所有关键字相关数据 在Goods表
         # goods = Goods
-
-
