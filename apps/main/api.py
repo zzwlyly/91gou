@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 
-from apps.main.field import MainNavFields, MainCategoryFields
+from apps.main.field import MainNavFields, MainCategoryFields, SearchFields
 from apps.main.models import GoodNav, GoodCategory
 from apps.product.models import Goods
 from apps.utils.response_result import to_response_success, to_response_error
@@ -74,8 +74,9 @@ class SearchResource(Resource):
 
     def get(self):
         kw = self.parser.parse_args().get('kw')
+        goods = Goods.query.filter(Goods.good_desc.like(f'%{kw}%')).all()
+        return to_response_success(data=goods,fields=SearchFields.result_fields)
 
-        # 1. 模糊查询到所有关键字相关数据 在Goods表
-        # goods = Goods
+
 
 
