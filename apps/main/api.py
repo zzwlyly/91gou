@@ -77,3 +77,5 @@ class SearchResource(Resource):
 
         # 1. 模糊查询到所有关键字相关数据 在Goods表
         # goods = Goods
+
+

@@ -25,4 +25,5 @@ class GoodsMainResource(Resource):
     '''
     def get(self):
         goods = Goods.query.all()
+
         return to_response_success(data=goods, fields=GoodsMainFields.result_fields)
