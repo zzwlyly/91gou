@@ -15,19 +15,19 @@ class OrdersResource(Resource):
         self.parser.add_argument('cart_id', type=int)
 
     # def get(self):
-        # 返回订单数据
-        # order = Orders.query.filter(Orders.oid == 124292935).first()
-        # order = Orders.query.filter(Orders.uid == 1).all()
-        # order_items = OrderItem.query.filter(OrderItem.uid == uid).all()
+    # 返回订单数据
+    # order = Orders.query.filter(Orders.oid == 124292935).first()
+    # order = Orders.query.filter(Orders.uid == 1).all()
+    # order_items = OrderItem.query.filter(OrderItem.uid == uid).all()
 
-        # return to_response_success(data=order, fields=OrdersFields.result_fields)
-        # uid = self.parser.parse_args().get('uid')
-        # try:
-        #     order_item = OrderItem.query.filter(OrderItem.uid == uid).all()
-        #     return to_response_success(data=order_item, fields=OrdersFields.result_fields)
-        # except Exception as e:
-        #     print(e)
-        #     return to_response_error()
+    # return to_response_success(data=order, fields=OrdersFields.result_fields)
+    # uid = self.parser.parse_args().get('uid')
+    # try:
+    #     order_item = OrderItem.query.filter(OrderItem.uid == uid).all()
+    #     return to_response_success(data=order_item, fields=OrdersFields.result_fields)
+    # except Exception as e:
+    #     print(e)
+    #     return to_response_error()
 
     def post(self):
         uid = self.parser.parse_args().get('uid')
@@ -59,6 +59,14 @@ class OrdersResource(Resource):
                     # 保存数据到order_item表
                     order_item = OrderItem(oid=oid, uid=uid, good_id=good_id, good_quantity=good_quantity)
                     db.session.add(order_item)
+                    db.session.commit()
+
+                    # 保存订单商品总价到order表
+                    total_money = 0
+                    order_item_goods = OrderItem.query.filter(OrderItem.oid == oid).all()
+                    for order_item_good in order_item_goods:
+                        total_money += int(order_item_good.goods.good_price) * int(order_item_good.good_quantity)
+                    new_orders = Orders.query.filter_by(oid=oid).update({'total_money': total_money})
                     db.session.commit()
 
                     # 返回订单数据
