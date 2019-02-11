@@ -5,7 +5,7 @@ from apps.main.api import CategoryResource
 from apps.main.api import MainNavResource, MainCategoryResource, SearchResource
 from apps.order.api import OrdersResource
 from apps.product.api import GoodsResource, GoodsLimitResource
-from apps.user.api import LoginResponseResource, LogoutResource
+from apps.user.api import LoginResponseResource, LogoutResource, InformationUser, AddressUser
 from apps.user.api import RegisterResource, LoginResource, AliPayResource
 
 api = Api(prefix='/api/v1')
@@ -51,5 +51,8 @@ api.add_resource(AliPayResource, '/alipay/')
 # ------------ 搜索 ------------ #
 api.add_resource(SearchResource, '/search/')
 
-# api.add_resource(InformationUser, '/information/')
-# api.add_resource(AddressUser, '/address/')
+# ------------ 修改个人信息 ------------ #
+api.add_resource(InformationUser, '/information/')
+
+# ------------ 添加收货地址 ------------ #
+api.add_resource(AddressUser, '/address/')
