@@ -37,8 +37,9 @@ class MainCategoryResource(Resource):
     def get(self):
         try:
             cates = GoodCategory.query.all()
-            # goods = cates.goods
-            # print(goods)
+
+            # print(cates[0].name, type(cates[0]))
+            # print(dir(cates[0]))
             return to_response_success(data=cates, fields=MainCategoryFields.result_fields)
         except Exception as e:
             print(e)

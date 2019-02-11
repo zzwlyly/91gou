@@ -4,7 +4,7 @@ from apps.cart.api import CartResource
 from apps.main.api import CategoryResource
 from apps.main.api import MainNavResource, MainCategoryResource, SearchResource
 from apps.order.api import OrdersResource
-from apps.product.api import GoodsResource, GoodsMainResource
+from apps.product.api import GoodsResource, GoodsLimitResource
 from apps.user.api import LoginResponseResource, LogoutResource
 from apps.user.api import RegisterResource, LoginResource, AliPayResource
 
@@ -25,7 +25,7 @@ api.add_resource(MainNavResource, '/main/nav/')
 api.add_resource(MainCategoryResource, '/main/cate/')
 
 # ------------ 所有商品详情 ------------ #
-api.add_resource(GoodsMainResource, '/goods/main/')
+api.add_resource(GoodsLimitResource, '/goods/limit/')
 
 # ------------ 商品分类 ------------ #
 api.add_resource(CategoryResource, '/cate/')
