@@ -71,8 +71,13 @@ class GoodsMainFields:
         'good_price': fields.Integer,
     }
 
+    data = {
+        'pages': fields.Integer,
+        'goods': fields.List(fields.Nested(data_fields)),
+    }
+
     result_fields = {
         'status': fields.Integer(default=RESPONSE_SUCCESS_STATUS),
         'msg': fields.String(default=RESPONSE_SUCCESS_MSG),
-        'data': fields.List(fields.Nested(data_fields))
+        'data': fields.Nested(data)
     }

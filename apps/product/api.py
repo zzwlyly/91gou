@@ -28,7 +28,7 @@ class GoodsResource(Resource):
 
 class GoodsLimitResource(Resource):
     '''
-    首页商品api
+    分类商品分页api
     '''
 
     def __init__(self):
@@ -48,7 +48,13 @@ class GoodsLimitResource(Resource):
 
             paginate = Goods.query.filter(Goods.cid == cate.cid).paginate(page=page, per_page=size, error_out=False)
             goods = paginate.items
-            return to_response_success(data=goods, fields=GoodsMainFields.result_fields)
+
+            data = {
+                'pages': paginate.total,
+                'goods': goods,
+            }
+
+            return to_response_success(data=data, fields=GoodsMainFields.result_fields)
         except Exception as e:
             print(e)
             return to_response_error()

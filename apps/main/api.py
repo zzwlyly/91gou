@@ -73,9 +73,22 @@ class SearchResource(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('kw', type=str)
+        self.parser.add_argument('page', type=int, default=1)
+        self.parser.add_argument('size', type=int, default=12)
         super().__init__()
 
     def get(self):
-        kw = self.parser.parse_args().get('kw')
-        goods = Goods.query.filter(Goods.good_desc.like(f'%{kw}%')).all()
-        return to_response_success(data=goods, fields=SearchFields.result_fields)
+        parser = self.parser.parse_args()
+        kw = parser.get('kw')
+        page = parser.get('page')
+        size = parser.get('size')
+        paginate = Goods.query.filter(Goods.good_desc.like(f'%{kw}%')).paginate(page=page, per_page=size,
+                                                                                error_out=False)
+        goods = paginate.items
+
+        data = {
+            'pages': paginate.total,
+            'goods': goods,
+        }
+
+        return to_response_success(data=data, fields=SearchFields.result_fields)
