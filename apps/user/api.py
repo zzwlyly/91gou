@@ -31,7 +31,7 @@ class LoginResource(Resource):
         password = data.get("password")
         if id_session and R.sismember("user_sessions", id_session):
             # self.uid = uid
-            # todo 返回数据
+            # 跳转到首页
             return redirect('http://localhost:63343/91gou/main/main.html')
             # return to_response_success(data=data, fields=UserMessageFields.result_fields)
         else:
@@ -48,14 +48,13 @@ class LoginResource(Resource):
                     user.flag = 1
                     db.session.commit()
                     flag = user.flag
-                    # user_data = User.query.filter(User.uid == id).first()
-                    # return redirect(f'http://127.0.0.1:5000/api/v1/login/response/?uid={id}')
-                    # return f'http://127.0.0.1:5000/api/v1/login/response/?uid={uid}'
+                    # 登录成功后返回用户id和用户状态，通过id和状态去请求用户信息
                     return [uid, flag]
-                    # return to_response_success(data=user_data, fields=UserMessageFields.result_fields)
                 else:
+                    # 登录失败
                     return 'login error~'
             else:
+                # 用户不存在
                 return 'user not exist~'
 
     # 实现手机,账号,邮箱都能登录
@@ -75,6 +74,10 @@ class LoginResource(Resource):
 
 
 class LoginResponseResource(Resource):
+    """
+    登录成功后通过用户id和状态查询用户信息json并返回
+    """
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('uid', type=int)
@@ -94,6 +97,10 @@ class LoginResponseResource(Resource):
 
 
 class LogoutResource(Resource):
+    """
+    退出登录
+    """
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('uid', type=int)
@@ -142,7 +149,7 @@ class RegisterResource(Resource):
                     db.session.commit()
                     uid = user.uid
                     flag = user.flag
-                    # todo 注册完跳主页面登录，暂时跳登录页面
+                    # 注册完跳主页面登录，暂时跳登录页面
                     # return [uid, flag]
                     return redirect("http://localhost:63343/91gou/main/login.html")
                 else:
