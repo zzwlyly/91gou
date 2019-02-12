@@ -31,35 +31,37 @@ class OrdersResource(Resource):
 
     def post(self):
         uid = self.parser.parse_args().get('uid')
-        cart_id = self.parser.parse_args().get('cart_id')
+        # cart_id = self.parser.parse_args().get('cart_id')
         try:
-            cart = CartItem.query.filter(CartItem.uid == uid,
-                                         CartItem.cart_id == cart_id
-                                         ).first()
-            if uid and cart_id:
-                if cart:
+            carts = CartItem.query.filter(CartItem.uid == uid,
+                                          CartItem.flag == 2,
+                                          ).all()
+            if uid:
+                if carts:
                     # 生成订单单号
                     oid = product_code()
-                    good_id = cart.good_id
-                    good_quantity = cart.good_quantity
                     user_ads = Address.query.filter(Address.uid == uid and Address.is_delete == 1).first()
                     aid = user_ads.aid
-
                     # todo 根据所有商品id查到订单表需要的商品内容并添加
                     # 保存数据到order表
                     new_order = Orders(oid=oid, uid=uid, aid=aid)
                     db.session.add(new_order)
                     db.session.commit()
 
-                    # 保存数据到cart_order表
-                    cart_order = CartOrder(oid=oid, cart_id=cart_id)
-                    db.session.add(cart_order)
-                    db.session.commit()
+                    for cart in carts:
+                        good_id = cart.good_id
+                        cart_id = cart.cart_id
+                        good_quantity = cart.good_quantity
 
-                    # 保存数据到order_item表
-                    order_item = OrderItem(oid=oid, uid=uid, good_id=good_id, good_quantity=good_quantity)
-                    db.session.add(order_item)
-                    db.session.commit()
+                        # 保存数据到cart_order表
+                        cart_order = CartOrder(oid=oid, cart_id=cart_id)
+                        db.session.add(cart_order)
+                        db.session.commit()
+
+                        # 保存数据到order_item表
+                        order_item = OrderItem(oid=oid, uid=uid, good_id=good_id, good_quantity=good_quantity)
+                        db.session.add(order_item)
+                        db.session.commit()
 
                     # 保存订单商品总价到order表
                     total_money = 0

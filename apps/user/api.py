@@ -253,13 +253,13 @@ class InformationUser(Resource):
             if nick_name or username or sex or telephone or birthday or email:
                 if not users:
                     if check_username.match(username) and check_phone.match(telephone) and check_email.match(email):
-                        user = User.query.filter_by(User.uid == uid).update({'nick_name': nick_name,
-                                                                             'username': username,
-                                                                             'sex': sex,
-                                                                             'birthday': birthday,
-                                                                             'telephone': telephone,
-                                                                             'email': email})
-                        db.session.sommit()
+                        user = User.query.filter_by(uid=uid).update({'nick_name': nick_name,
+                                                                     'username': username,
+                                                                     'sex': sex,
+                                                                     'birthday': birthday,
+                                                                     'telephone': telephone,
+                                                                     'email': email})
+                        db.session.commit()
                         data = "个人信息修改成功!请跳转登录页面!"
                         return to_response_success(data=data, fields=UserLoginFields.result_fields)
                     else:
@@ -294,7 +294,7 @@ class AddressUser(Resource):
                                        Address.name == name,
                                        Address.phone == phone,
                                        Address.detail == detail,
-                                       Address.address == address)
+                                       Address.address == address).first()
             if not adr:
                 if check_phone.match(phone):
                     addre = Address(uid=uid,
