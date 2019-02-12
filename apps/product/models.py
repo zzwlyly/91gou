@@ -44,6 +44,9 @@ class Goods(db.Model):
     goods_sku = db.relationship("GoodsSKU", backref="goods", lazy="dynamic")
     goods_img = db.relationship("GoodsImages", backref="goods", lazy="dynamic")
 
+    def __repr__(self):
+        return self.good_name
+
 
 # =============================================================================这是分界线
 

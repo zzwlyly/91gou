@@ -16,6 +16,7 @@ class BaseConfig:
     UPLOADS_DEFAULT_DEST = UPLOAD_ROOT_PATH
     # 生成访问图片的路径
     UPLOADS_DEFAULT_URL = '/static/upload/'
+    BABEL_DEFAULT_LOCALE = 'zh_CN'
     CACHE_TYPE = 'redis'
     #   配置session的存储方式
     # 密钥
@@ -54,7 +55,7 @@ class DeveloperConfig(BaseConfig):
     database = {
         'ENGINE': 'mysql',
         'DB_NAME': '91gou',
-        'PASSWORD': 'zzw12345'
+        'PASSWORD': '123456'
     }
 
     # 打印sql语句

@@ -1,12 +1,20 @@
+from flask_admin import Admin
 from flask_restful import Api
+
+from apps.ext import db, admin
 from apps.appraise.api import AppraiseResource
 from apps.cart.api import CartResource
-from apps.main.api import CategoryResource
-from apps.main.api import MainNavResource, MainCategoryResource, SearchResource
+
+from apps.main.api import MainNavResource, MainCategoryResource, SearchResource, CategoryResource
+from apps.main.models import GoodNav, GoodCategory, GcProperty
 from apps.order.api import OrdersResource
-from apps.product.api import GoodsResource, GoodsLimitResource
-from apps.user.api import LoginResponseResource, LogoutResource, InformationUser, AddressUser
-from apps.user.api import RegisterResource, LoginResource, AliPayResource
+from apps.product.api import GoodsLimitResource
+from apps.product.models import Goods
+from apps.user.api import LogoutResource, InformationUser, AddressUser
+
+from apps.product.api import GoodsResource
+from apps.user.api import RegisterResource, LoginResource, AliPayResource, LoginResponseResource
+from apps.user.models import User, Address
 
 api = Api(prefix='/api/v1')
 
@@ -30,10 +38,7 @@ api.add_resource(GoodsLimitResource, '/goods/limit/')
 # ------------ 商品分类 ------------ #
 api.add_resource(CategoryResource, '/cate/')
 
-# ------------ 订单 ------------ #
 api.add_resource(OrdersResource, '/orders/')
-
-# ------------ 商品详情 ------------ #
 api.add_resource(GoodsResource, '/goods/')
 
 # ------------ 登录/注册 ------------ #
@@ -56,3 +61,22 @@ api.add_resource(InformationUser, '/information/')
 
 # ------------ 添加收货地址 ------------ #
 api.add_resource(AddressUser, '/address/')
+
+
+
+"""
+#######################后台管理################################
+"""
+from flask_admin.contrib.sqla import ModelView
+
+admin.add_view(ModelView(User,db.session))
+admin.add_view(ModelView(Address,db.session))
+admin.add_view(ModelView(GoodNav,db.session))
+admin.add_view(ModelView(GoodCategory,db.session))
+admin.add_view(ModelView(GcProperty,db.session))
+admin.add_view(ModelView(Goods,db.session))
+
+
+
+
+

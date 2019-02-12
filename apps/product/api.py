@@ -34,8 +34,9 @@ class GoodsLimitResource(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('nid', type=int)
-        self.parser.add_argument('page', type=int)
+        self.parser.add_argument('page', type=int, default=1)
         self.parser.add_argument('size', type=int, default=12)
+        self.parser.add_argument("sort", type=int, default=1)
 
     def get(self):
         try:
@@ -43,10 +44,15 @@ class GoodsLimitResource(Resource):
             nid = parser.get('nid')
             page = parser.get('page')
             size = parser.get('size')
+            sort = parser.get("sort")
 
             cate = GoodCategory.query.filter(GoodCategory.nid == nid).first()
-
-            paginate = Goods.query.filter(Goods.cid == cate.cid).paginate(page=page, per_page=size, error_out=False)
+            if sort == 2:
+                paginate = Goods.query.filter(Goods.cid == cate.cid).order_by(-Goods.good_price).paginate(page=page,
+                                                                                                         per_page=size,
+                                                                                                         error_out=False)
+            else:
+                paginate = Goods.query.filter(Goods.cid == cate.cid).paginate(page=page, per_page=size, error_out=False)
             goods = paginate.items
 
             data = {

@@ -6,6 +6,8 @@ from apps import config
 from apps.config import R
 from apps.ext import db
 from apps.user.field import UserMessageFields, UserLoginFields
+from apps.utils.response_result import to_response_success
+from apps.user.field import UserMessageFields, UserLoginFields
 from apps.utils.response_result import to_response_success, to_response_error
 from apps.user.models import User, Vip, UserSafe
 
@@ -191,8 +193,8 @@ class AliPayResource(Resource):
         money = data.get("money")
         order_num = data.get("order_num")
         goods = data.get("goods")
-        # 实例化Alipay对象
         alipay = AliPay(
+        # 实例化Alipay对象
             appid=config.APP_ID,
             app_notify_url=None,
             app_private_key_string=config.APP_PRIVATE_KEY_STR,
@@ -215,6 +217,7 @@ class AliPayResource(Resource):
             total_amount=money,
             return_url='https:www.baidu.com',
         )
+        print(config.PAY_URL_DEV+"?"+order_str)
         return redirect(config.PAY_URL_DEV + '?' + order_str)
 
 

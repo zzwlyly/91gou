@@ -1,3 +1,4 @@
+from flask_admin import Admin
 from flask_cors import CORS
 from flask_session import Session
 from flask_uploads import UploadSet, IMAGES, DOCUMENTS, configure_uploads
@@ -22,13 +23,8 @@ def init_ext(app):
     init_cors(app)
     # 初始化session缓存
     init_session(app)
-
-
-
-
-
-
-
+    # 初始化admin
+    init_admin(app)
 
 
 db = SQLAlchemy()
@@ -123,3 +119,23 @@ cors = CORS(resources={r"/api/*": {"origins": "*"}})
 
 def init_cors(app):
     cors.init_app(app)
+
+
+"""
+#######################后台管理################################
+"""
+from flask_babel import Babel
+
+# 初始化admin
+admin = Admin(name="91gou商城后台管理")
+babel = Babel()
+
+
+def init_admin(app):
+    admin.init_app(app)
+    babel.init_app(app)
+
+
+"""
+#######################后台管理################################
+"""

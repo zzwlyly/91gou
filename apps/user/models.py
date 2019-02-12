@@ -5,6 +5,8 @@ from apps.ext import db
 from flask_login import UserMixin
 
 
+
+
 # 用户表
 class User(db.Model, UserMixin):
     __tablename__ = "user"
@@ -51,6 +53,9 @@ class User(db.Model, UserMixin):
     def verify_password(self, password):
         return check_password_hash(self._password, password)
 
+    def __repr__(self):
+        return self.username
+
 
 # 用户地址表
 class Address(db.Model):
@@ -63,7 +68,8 @@ class Address(db.Model):
     detail = db.Column(db.Text)
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-
+    def __repr__(self):
+        return self.name
 
 # 用户安全设置表
 class UserSafe(db.Model):

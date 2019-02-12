@@ -39,7 +39,8 @@ class GoodNav(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
     good_category = db.relationship("GoodCategory", backref="good_nav", lazy="dynamic")
 
-
+    def __repr__(self):
+        return self.name
 # 商品分类
 class GoodCategory(db.Model):
     __tablename__ = "good_category"
@@ -55,7 +56,8 @@ class GoodCategory(db.Model):
 
     cate_property = db.relationship("GcProperty", backref="good_category", lazy="dynamic")
     goods = db.relationship("Goods", backref="good_category", lazy="dynamic")
-
+    def __repr__(self):
+        return self.name
 
 # 商品分类属性表
 class GcProperty(db.Model):
@@ -68,7 +70,8 @@ class GcProperty(db.Model):
     values = db.Column(db.String(255))
     is_delete = db.Column(db.Integer)  # 0：删除 1：有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-
+    def __repr__(self):
+        return self.name
 
 class Banners(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
