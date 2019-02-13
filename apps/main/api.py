@@ -104,7 +104,7 @@ class SearchResource(Resource):
         goods = paginate.items
 
         data = {
-            'pages': paginate.total,
+            'total': paginate.total,
             'goods': goods,
         }
 

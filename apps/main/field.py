@@ -107,7 +107,7 @@ class SearchFields:
     }
 
     data = {
-        'pages': fields.Integer,
+        'total': fields.Integer,
         'goods': fields.List(fields.Nested(goods_fields)),
     }
     result_fields = {
