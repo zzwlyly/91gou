@@ -76,6 +76,7 @@ class TestMainCateFields:
         'show_img': fields.String,
         'good_desc': fields.String,
         'good_price': fields.Integer,
+        'sale_volume': fields.Integer,
     }
 
     # 数据结构的键名是模型字段名
@@ -102,6 +103,7 @@ class SearchFields:
         'show_img': fields.String,
         'good_desc': fields.String,
         'good_price': fields.Integer,
+        'sale_volume': fields.Integer,
     }
 
     data = {

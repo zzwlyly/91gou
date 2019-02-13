@@ -13,6 +13,7 @@ class OrdersFields:
         'good_name': fields.String,
         'good_desc': fields.String,
         'good_price': fields.String,
+        'sale_volume': fields.Integer,
     }
 
     items_fields = {

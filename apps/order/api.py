@@ -91,8 +91,11 @@ class OrderStatusResource(Resource):
             cart_order = CartOrder.query.filter(CartOrder.oid == oid).all()
             for c_order in cart_order:
                 cart_item = CartItem.query.filter(CartItem.cart_id == c_order.cart_id).first()
+                cart_item.goods.sale_volume = cart_item.goods.sale_volume + cart_item.good_quantity
                 cart_item.flag = 0
+                # 修改商品销量
                 db.session.commit()
+
         except Exception as e:
             print(e)
 

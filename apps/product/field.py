@@ -47,6 +47,7 @@ class GoodsFields:
         'show_img': fields.String,
         'good_desc': fields.String,
         'good_price': fields.Integer,
+        'sale_volume': fields.Integer,
         'goods_sku': fields.List(fields.Nested(sku_fields)),
         'goods_spu': fields.List(fields.Nested(spu_fields)),
         'goods_img': fields.List(fields.Nested(img_fields)),
@@ -69,9 +70,11 @@ class GoodsMainFields:
         'show_img': fields.String,
         'good_desc': fields.String,
         'good_price': fields.Integer,
+        'sale_volume': fields.Integer,
     }
 
     data = {
+        'total': fields.Integer,
         'pages': fields.Integer,
         'goods': fields.List(fields.Nested(data_fields)),
     }

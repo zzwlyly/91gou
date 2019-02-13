@@ -5,7 +5,7 @@ from flask_restful import Resource, reqparse
 from apps import config
 from apps.config import R
 from apps.ext import db
-from apps.order.models import Orders
+from apps.order.models import Orders, OrderItem
 from apps.user.field import UserMessageFields, UserLoginFields
 from apps.utils.response_result import to_response_success
 from apps.user.field import UserMessageFields, UserLoginFields
@@ -193,6 +193,7 @@ class AliPayResource(Resource):
         uid = data.get("uid")
         oid = data.get("oid")
         order = Orders.query.filter(Orders.oid == oid, Orders.uid == uid, Orders.status == -2).first()
+
         money = str(order.real_money)
         # order_num = order.oid
         # todo 商品信息未添加

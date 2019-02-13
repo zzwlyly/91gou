@@ -48,15 +48,20 @@ class GoodsLimitResource(Resource):
 
             cate = GoodCategory.query.filter(GoodCategory.nid == nid).first()
             if sort == 2:
-                paginate = Goods.query.filter(Goods.cid == cate.cid).order_by(-Goods.good_price).paginate(page=page,
-                                                                                                         per_page=size,
-                                                                                                         error_out=False)
+                paginate = Goods.query.filter(Goods.cid == cate.cid)\
+                    .order_by(-Goods.good_price)\
+                    .paginate(page=page,per_page=size,error_out=False)
+            elif sort == 3:
+                paginate = Goods.query.filter(Goods.cid == cate.cid) \
+                    .order_by(-Goods.sale_volume) \
+                    .paginate(page=page, per_page=size, error_out=False)
             else:
                 paginate = Goods.query.filter(Goods.cid == cate.cid).paginate(page=page, per_page=size, error_out=False)
             goods = paginate.items
 
             data = {
-                'pages': paginate.total,
+                'total': paginate.total,
+                'pages': paginate.pages,
                 'goods': goods,
             }
 
