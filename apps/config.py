@@ -55,7 +55,7 @@ class DeveloperConfig(BaseConfig):
     database = {
         'ENGINE': 'mysql',
         'DB_NAME': '91gou',
-        'PASSWORD': '123456'
+        'PASSWORD': 'zzw12345'
     }
 
     # 打印sql语句
@@ -108,15 +108,15 @@ environment = {
 ==============支付宝配置=================
 """
 # 支付宝注册应用生成的IP
-APP_ID = '2016092300580718'
+APP_ID = '2016092300580891'
 
 # 沙箱环境支付网关就是沙箱那面那个关口
 PAY_URL_DEV = 'https://openapi.alipaydev.com/gateway.do'
 # 正式支付的网关
 PAY_URL = 'https://openapi.alipay.com/gateway.do'
 # 公钥,私钥
-APP_PRIVATE_KEY_STR = open(os.path.join(BASE_DIR, 'alipay/app_private_key.pem')).read()
-APP_PUBLICK_KEY_STR = open(os.path.join(BASE_DIR, 'alipay/app_public_key.pem')).read()
+APP_PRIVATE_KEY_STR = open(os.path.join(BASE_DIR, 'alipay/rsa_private_key.pem')).read()
+APP_PUBLICK_KEY_STR = open(os.path.join(BASE_DIR, 'alipay/rsa_public_key.pem')).read()
 
 """
 ==============支付宝配置=================

@@ -15,4 +15,4 @@ def product_code():
 
 if __name__ == '__main__':
     a = product_code()
-    print(a)
+    print(a,type(a))

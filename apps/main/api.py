@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 
-from apps.main.field import MainNavFields, MainCategoryFields, SearchFields
+from apps.main.field import MainNavFields, MainCategoryFields, SearchFields, TestMainCateFields
 from apps.main.models import GoodNav, GoodCategory
 from apps.product.models import Goods
 from apps.utils.response_result import to_response_success, to_response_error
@@ -41,6 +41,23 @@ class MainCategoryResource(Resource):
             # print(cates[0].name, type(cates[0]))
             # print(dir(cates[0]))
             return to_response_success(data=cates, fields=MainCategoryFields.result_fields)
+        except Exception as e:
+            print(e)
+            return to_response_error()
+
+
+class TestMainCategoryResource(Resource):
+    '''
+    测试数据 首页商品api
+    '''
+
+    def get(self):
+        try:
+            cates = GoodCategory.query.all()
+
+            # print(cates[0].name, type(cates[0]))
+            # print(dir(cates[0]))
+            return to_response_success(data=cates, fields=TestMainCateFields.result_fields)
         except Exception as e:
             print(e)
             return to_response_error()

@@ -131,6 +131,8 @@ admin = Admin(name="91gou商城后台管理")
 babel = Babel()
 
 
+#
+#
 def init_admin(app):
     admin.init_app(app)
     babel.init_app(app)

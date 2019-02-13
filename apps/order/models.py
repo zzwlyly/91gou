@@ -29,7 +29,7 @@ class Orders(db.Model):
     pay_from = db.Column(db.Integer)
     # 支付状态
     # 0:未支付 1:已支付
-    pay_status = db.Column(db.Integer)
+    pay_status = db.Column(db.Integer, default=0)
     # 订单成功所获取积分
     order_score = db.Column(db.Integer)
     # 订单备注

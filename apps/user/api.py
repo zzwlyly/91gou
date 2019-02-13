@@ -5,6 +5,7 @@ from flask_restful import Resource, reqparse
 from apps import config
 from apps.config import R
 from apps.ext import db
+from apps.order.models import Orders
 from apps.user.field import UserMessageFields, UserLoginFields
 from apps.utils.response_result import to_response_success
 from apps.user.field import UserMessageFields, UserLoginFields
@@ -13,8 +14,6 @@ from apps.user.models import User, Vip, UserSafe
 
 # 登录
 from apps.user.models import User, Vip, UserSafe, Address
-
-parser = reqparse.RequestParser()
 
 
 class LoginResource(Resource):
@@ -184,17 +183,22 @@ class RegisterResource(Resource):
 class AliPayResource(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('money', type=str)
-        self.parser.add_argument('order_num', type=str)
-        self.parser.add_argument('goods', type=str)
+        self.parser.add_argument('uid', type=str)
+        self.parser.add_argument('oid', type=str)
+        # self.parser.add_argument('order_num', type=str)
+        # self.parser.add_argument('goods', type=str)
 
     def post(self):
         data = self.parser.parse_args()
-        money = data.get("money")
-        order_num = data.get("order_num")
-        goods = data.get("goods")
-        alipay = AliPay(
+        uid = data.get("uid")
+        oid = data.get("oid")
+        order = Orders.query.filter(Orders.oid == oid, Orders.uid == uid, Orders.status == -2).first()
+        money = str(order.real_money)
+        # order_num = order.oid
+        # todo 商品信息未添加
+        # goods = data.get("goods")
         # 实例化Alipay对象
+        alipay = AliPay(
             appid=config.APP_ID,
             app_notify_url=None,
             app_private_key_string=config.APP_PRIVATE_KEY_STR,
@@ -211,14 +215,20 @@ class AliPayResource(Resource):
         return_url  支付完成之后前端跳转的界面 get请求
         notify_url 支付完成后台回调接口  post请求
         '''
+        # 支付成功后发送post请求，修改订单数据
+        pay_success_url = f'http://127.0.0.1:5000/api/v1/orders/status/?uid={uid}&oid={oid}'
         order_str = alipay.api_alipay_trade_page_pay(
-            subject=goods,
-            out_trade_no=order_num,
+            subject='91gou支付',
+            out_trade_no=oid,
             total_amount=money,
-            return_url='https:www.baidu.com',
+            return_url=pay_success_url,
+            # notify_url=pay_success_url,
         )
-        print(config.PAY_URL_DEV+"?"+order_str)
-        return redirect(config.PAY_URL_DEV + '?' + order_str)
+        pay_url = config.PAY_URL_DEV + '?' + order_str
+        print(pay_url)
+
+        # return redirect(config.PAY_URL_DEV + '?' + order_str)
+        return pay_url
 
 
 class InformationUser(Resource):
