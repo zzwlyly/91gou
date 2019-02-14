@@ -314,8 +314,8 @@ class AddressUser(Resource):
                     addre = Address(uid=uid,
                                     name=name,
                                     phone=phone,
-                                    detail=detail,
-                                    address=address)
+                                    detail=address,
+                                    address=detail)
                     db.session.add(addre)
                     db.session.commit()
                     data = "收货地址成功!请跳转登录页面!"
