@@ -96,6 +96,8 @@ class OrderStatusResource(Resource):
                 # 修改商品销量
                 db.session.commit()
 
+            # todo 支付完成状态改完以后重定向跳转到一个页面
+
         except Exception as e:
             print(e)
 

@@ -1,7 +1,8 @@
 from flask_restful import Resource, reqparse
 
+from apps.ext import cache
 from apps.main.field import MainNavFields, MainCategoryFields, SearchFields, TestMainCateFields
-from apps.main.models import GoodNav, GoodCategory
+from apps.main.models import GoodCategory, GoodNavigation
 from apps.product.models import Goods
 from apps.utils.response_result import to_response_success, to_response_error
 
@@ -11,10 +12,12 @@ class MainNavResource(Resource):
     导航api
     '''
 
+    @cache.cached(7 * 24 * 60 * 60)
     def get(self):
 
         try:
-            nav = GoodNav.query.all()
+            # nav = GoodNav.query.all()
+            nav = GoodNavigation.query.all()
 
             def get_children(nid=0):
                 data = []
@@ -52,12 +55,23 @@ class TestMainCategoryResource(Resource):
     '''
 
     def get(self):
+        category = []
         try:
             cates = GoodCategory.query.all()
-
+            for cate in cates:
+                goods = Goods.query.filter(Goods.cid == cate.cid).paginate(page=1, per_page=6, error_out=False)
+                data_fields = {
+                    'cid': cate.cid,
+                    'nid': cate.nid,
+                    'name': cate.name,
+                    # 绑定从表数据，根据关联关系查询...
+                    'cate_property': cate,
+                    'goods': goods.items,
+                }
+                category.append(data_fields)
             # print(cates[0].name, type(cates[0]))
             # print(dir(cates[0]))
-            return to_response_success(data=cates, fields=TestMainCateFields.result_fields)
+            return to_response_success(data=category, fields=TestMainCateFields.result_fields)
         except Exception as e:
             print(e)
             return to_response_error()
@@ -74,7 +88,9 @@ class CategoryResource(Resource):
 
     def get(self):
         try:
+
             nid = self.parser.parse_args().get('nid')
+
             cate = GoodCategory.query.filter(GoodCategory.nid == nid).first()
             return to_response_success(data=cate, fields=MainCategoryFields.result_fields)
         except Exception as e:

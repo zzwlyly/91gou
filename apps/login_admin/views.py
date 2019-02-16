@@ -29,5 +29,5 @@ def admin():
                 flash('账号或密码有误,请重新输入!!!')
                 return render_template('login.html')
         else:
-            flash('用户名错误!!!')
+            flash('用户不存在!!!')
             return render_template('login.html')

@@ -1,5 +1,4 @@
 from flask_restful import Resource, reqparse
-from werkzeug.utils import redirect
 
 from apps.ext import db
 from apps.cart.models import CartItem
@@ -37,6 +36,7 @@ class CartResource(Resource):
             shopcar = CartItem.query.filter(CartItem.uid == uid, CartItem.good_id == good_id[i],
                                             CartItem.flag == 1).first()
             if quantity is None:
+                # 点击了结算，还未支付，修改购物车条目状态
                 shopcar.flag = 2
                 db.session.commit()
             else:

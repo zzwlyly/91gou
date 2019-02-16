@@ -10,7 +10,6 @@ from apps.ext import admin, db
 
 from apps.main.api import MainNavResource, MainCategoryResource, SearchResource, CategoryResource, \
     TestMainCategoryResource
-from apps.main.models import GoodNav, GoodCategory, GcProperty
 from apps.order.api import OrdersResource, OrderStatusResource
 from apps.product.api import GoodsLimitResource
 from apps.product.models import Goods

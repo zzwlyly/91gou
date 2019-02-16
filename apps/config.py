@@ -1,4 +1,4 @@
-
+import datetime
 import os
 import redis
 BASE_DIR = os.path.dirname(__file__)
@@ -20,14 +20,14 @@ class BaseConfig:
     CACHE_TYPE = 'redis'
     #   配置session的存储方式
     # 密钥
-    # SECRET_KEY = "secret_key"
-    # # 使用redis缓存
-    # SESSION_TYPE = 'redis'
-    # # 定义前缀
-    # SESSION_KEY_PREFIX= 'flask'
-    # # 过期时间
-    # PERMANENT_SESSION_LIFETIME = datetime.timedelta(days=1)
-    # # SESSION_REDIS = redis.StrictRedis(host="127.0.0.1", port=6379, db=3)
+    SECRET_KEY = "secret_key"
+    # 使用redis缓存
+    SESSION_TYPE = 'redis'
+    # 定义前缀
+    SESSION_KEY_PREFIX= 'flask'
+    # 过期时间
+    PERMANENT_SESSION_LIFETIME = datetime.timedelta(days=1)
+    SESSION_REDIS = redis.StrictRedis(host="127.0.0.1", port=6379, db=3)
     #     COOKIE
     REMEMBER_COOKIE_NAME = 'session_id'
     # 上传文件的最大长度
@@ -55,7 +55,7 @@ class DeveloperConfig(BaseConfig):
     database = {
         'ENGINE': 'mysql',
         'DB_NAME': '91gou',
-        'PASSWORD': '123456'
+        'PASSWORD': 'zzw12345'
     }
 
     # 打印sql语句

@@ -85,7 +85,7 @@ class TestMainCateFields:
         'nid': fields.Integer,
         'name': fields.String,
         # 绑定从表数据，根据关联关系查询...
-        'cate_property': fields.List(fields.Nested(property_fields)),
+        # 'cate_property': fields.List(fields.Nested(property_fields)),
         'goods': fields.List(fields.Nested(goods_fields)),
     }
 

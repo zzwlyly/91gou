@@ -5,8 +5,6 @@ from apps.ext import db
 from flask_login import UserMixin
 
 
-
-
 # 用户表
 class User(db.Model, UserMixin):
     __tablename__ = "user"
@@ -57,15 +55,13 @@ class User(db.Model, UserMixin):
         return self.username
 
 
-
-
 # 管理员表
 class Role(db.Model):
     __tablename__ = "role"
     rid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64))
     psw = db.Column(db.String(255), nullable=False)
-    _is_active = db.Column(db.Integer,default=1)
+    _is_active = db.Column(db.Integer, default=1)
 
     @property
     def is_active(self):
@@ -86,8 +82,10 @@ class Address(db.Model):
     detail = db.Column(db.Text)
     is_delete = db.Column(db.Integer, default=1)  # 0:删除 1:有效
     create_time = db.Column(db.DateTime, default=datetime.datetime.now())
+
     def __repr__(self):
         return self.name
+
 
 # 用户安全设置表
 class UserSafe(db.Model):

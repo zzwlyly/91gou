@@ -18,6 +18,7 @@ class GoodsResource(Resource):
     def get(self):
         try:
             good_id = self.parser.parse_args().get('good_id')
+
             goods = Goods.query.filter(Goods.good_id == good_id).first()
 
             return to_response_success(data=goods, fields=GoodsFields.result_fields)

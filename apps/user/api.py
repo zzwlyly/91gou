@@ -5,15 +5,12 @@ from flask_restful import Resource, reqparse
 from apps import config
 from apps.config import R
 from apps.ext import db
-from apps.order.models import Orders, OrderItem
-from apps.user.field import UserMessageFields, UserLoginFields
-from apps.utils.response_result import to_response_success
+from apps.order.models import Orders
 from apps.user.field import UserMessageFields, UserLoginFields
 from apps.utils.response_result import to_response_success, to_response_error
-from apps.user.models import User, Vip, UserSafe
 
 # 登录
-from apps.user.models import User, Vip, UserSafe, Address
+from apps.user.models import User, Address
 
 
 class LoginResource(Resource):
