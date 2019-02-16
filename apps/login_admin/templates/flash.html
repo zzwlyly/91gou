@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style type="text/css">
+    .wrap,.flash{
+        text-align: center;
+    }
+
+</style>
+<body>
+<div class="flash">
+    {% with msgs=get_flashed_messages() %}
+    {% if msgs %}
+        <p style="color: red">{{ msgs[0] }}</p>
+    {% endif %}
+    {% endwith %}
+</div>
+{% block body %}
+
+{% endblock %}
+
+</body>
+</html>

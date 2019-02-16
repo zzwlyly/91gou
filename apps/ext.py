@@ -1,4 +1,4 @@
-from flask_admin import Admin
+from flask_admin import Admin, AdminIndexView
 from flask_cors import CORS
 from flask_session import Session
 from flask_uploads import UploadSet, IMAGES, DOCUMENTS, configure_uploads
@@ -127,12 +127,13 @@ def init_cors(app):
 from flask_babel import Babel
 
 # 初始化admin
-admin = Admin(name="91gou商城后台管理")
+admin = Admin(index_view=AdminIndexView(
+    name='导航栏',
+    url='/91admin',
+))
 babel = Babel()
 
 
-#
-#
 def init_admin(app):
     admin.init_app(app)
     babel.init_app(app)

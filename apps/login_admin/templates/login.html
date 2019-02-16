@@ -1,0 +1,9 @@
+{% extends 'flash.html' %}
+{% block body %}
+    <form action="{{ url_for('account.admin') }}" method="post" class="wrap">
+    <p>欢迎管理员登录!!!</p>
+    <input type="text" name="username" placeholder="请输入您的账号">
+    <input type="password" name="password" placeholder="请输入您的密码">
+    <input type="submit" value="登陆">
+    </form>
+{% endblock %}

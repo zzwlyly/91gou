@@ -57,6 +57,24 @@ class User(db.Model, UserMixin):
         return self.username
 
 
+
+
+# 管理员表
+class Role(db.Model):
+    __tablename__ = "role"
+    rid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(64))
+    psw = db.Column(db.String(255), nullable=False)
+    _is_active = db.Column(db.Integer,default=1)
+
+    @property
+    def is_active(self):
+        return self._is_active
+
+    def get_id(self):
+        return self.uid
+
+
 # 用户地址表
 class Address(db.Model):
     __tablename__ = "address"

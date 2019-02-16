@@ -1,10 +1,12 @@
-from flask_admin import Admin
+from flask import url_for, request
+from flask_login import current_user
 from flask_restful import Api
+from werkzeug.utils import redirect
 
-# from apps.ext import db, admin
 from apps.appraise.api import AppraiseResource
 from apps.cart.api import CartResource, CartDeleteResource
 from apps.ext import admin, db
+
 
 from apps.main.api import MainNavResource, MainCategoryResource, SearchResource, CategoryResource, \
     TestMainCategoryResource
@@ -16,7 +18,7 @@ from apps.user.api import LogoutResource, InformationUser, AddressUser
 
 from apps.product.api import GoodsResource
 from apps.user.api import RegisterResource, LoginResource, AliPayResource, LoginResponseResource
-from apps.user.models import User, Address
+from apps.user.models import User, Role
 
 api = Api(prefix='/api/v1')
 
@@ -74,11 +76,11 @@ api.add_resource(AddressUser, '/address/')
 #######################后台管理################################
 """
 from flask_admin.contrib.sqla import ModelView
-
 admin.add_view(ModelView(User, db.session))
 # admin.add_view(ModelView(Address, db.session))
 admin.add_view(ModelView(Goods, db.session))
 # admin.add_view(ModelView(GoodNav, db.session))
 # admin.add_view(ModelView(GoodCategory, db.session))
 # admin.add_view(ModelView(GcProperty, db.session))
+
 
