@@ -105,6 +105,7 @@ class SearchResource(Resource):
 
         data = {
             'total': paginate.total,
+            'pages': paginate.pages,
             'goods': goods,
         }
 

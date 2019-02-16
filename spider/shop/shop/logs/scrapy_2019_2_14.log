@@ -1,0 +1,123 @@
+2019-02-14 10:38:49 [scrapy.utils.log] INFO: Scrapy 1.5.1 started (bot: shop)
+2019-02-14 10:38:49 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.5.1, w3lib 1.19.0, Twisted 18.9.0, Python 3.7.0 (default, Jun 28 2018, 07:39:16) - [Clang 4.0.1 (tags/RELEASE_401/final)], pyOpenSSL 18.0.0 (OpenSSL 1.1.0j  20 Nov 2018), cryptography 2.4.2, Platform Darwin-18.2.0-x86_64-i386-64bit
+2019-02-14 10:38:49 [scrapy.crawler] INFO: Overridden settings: {'AUTOTHROTTLE_ENABLED': True, 'BOT_NAME': 'shop', 'CONCURRENT_REQUESTS': 32, 'DOWNLOAD_DELAY': 1, 'LOG_FILE': 'logs/scrapy_2019_2_14.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'shop.spiders', 'SPIDER_MODULES': ['shop.spiders']}
+2019-02-14 10:38:49 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.throttle.AutoThrottle']
+2019-02-14 10:38:49 [twisted] CRITICAL: Unhandled error in Deferred:
+2019-02-14 10:38:49 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "/Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/selenium/webdriver/common/service.py", line 76, in start
+    stdin=PIPE)
+  File "/Users/zouziwei/anaconda3/lib/python3.7/subprocess.py", line 756, in __init__
+    restore_signals, start_new_session)
+  File "/Users/zouziwei/anaconda3/lib/python3.7/subprocess.py", line 1499, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'geckodriver': 'geckodriver'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/twisted/internet/defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "/Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/scrapy/crawler.py", line 79, in crawl
+    self.spider = self._create_spider(*args, **kwargs)
+  File "/Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/scrapy/crawler.py", line 102, in _create_spider
+    return self.spidercls.from_crawler(self, *args, **kwargs)
+  File "/Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/scrapy/spiders/__init__.py", line 51, in from_crawler
+    spider = cls(*args, **kwargs)
+  File "/Users/zouziwei/PycharmProjects/Flask/91gou/shop/shop/spiders/JD.py", line 25, in __init__
+    self.driver = create_bs_driver()
+  File "/Users/zouziwei/PycharmProjects/Flask/91gou/shop/utils/bshead.py", line 23, in create_bs_driver
+    driver = webdriver.Firefox(firefox_options=firefox_opt)
+  File "/Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/selenium/webdriver/firefox/webdriver.py", line 164, in __init__
+    self.service.start()
+  File "/Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/selenium/webdriver/common/service.py", line 83, in start
+    os.path.basename(self.path), self.start_error_message)
+selenium.common.exceptions.WebDriverException: Message: 'geckodriver' executable needs to be in PATH. 
+
+2019-02-14 10:46:56 [scrapy.utils.log] INFO: Scrapy 1.5.1 started (bot: shop)
+2019-02-14 10:46:56 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.5.1, w3lib 1.19.0, Twisted 18.9.0, Python 3.7.0 (default, Jun 28 2018, 07:39:16) - [Clang 4.0.1 (tags/RELEASE_401/final)], pyOpenSSL 18.0.0 (OpenSSL 1.1.0j  20 Nov 2018), cryptography 2.4.2, Platform Darwin-18.2.0-x86_64-i386-64bit
+2019-02-14 10:46:56 [scrapy.crawler] INFO: Overridden settings: {'AUTOTHROTTLE_ENABLED': True, 'BOT_NAME': 'shop', 'CONCURRENT_REQUESTS': 32, 'DOWNLOAD_DELAY': 1, 'LOG_FILE': 'logs/scrapy_2019_2_14.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'shop.spiders', 'SPIDER_MODULES': ['shop.spiders']}
+2019-02-14 10:46:56 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.throttle.AutoThrottle']
+2019-02-14 10:46:59 [py.warnings] WARNING: /Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/scrapy/utils/deprecate.py:156: ScrapyDeprecationWarning: `scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware` class is deprecated, use `scrapy.downloadermiddlewares.useragent.UserAgentMiddleware` instead
+  ScrapyDeprecationWarning)
+
+2019-02-14 10:46:59 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'shop.middlewares.RotateUserAgentMiddleware',
+ 'shop.middlewares.MyIPCroxyMiddleware',
+ 'shop.middlewares.ShopDownloaderMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'shop.middlewares.SeleniumJDMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-02-14 10:46:59 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-02-14 10:46:59 [scrapy.middleware] INFO: Enabled item pipelines:
+['shop.pipelines.ShopPipeline',
+ 'shop.async_mysqlpipelines.AsyncMysqlPipelines',
+ 'shop.imagepipelines.MyImagesPipeline']
+2019-02-14 10:46:59 [scrapy.core.engine] INFO: Spider opened
+2019-02-14 10:46:59 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2019-02-14 10:46:59 [JD] INFO: Spider opened: JD
+2019-02-14 10:47:05 [scrapy.crawler] INFO: Received SIGINT, shutting down gracefully. Send again to force 
+2019-02-14 11:15:45 [scrapy.utils.log] INFO: Scrapy 1.5.1 started (bot: shop)
+2019-02-14 11:15:45 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.0.3, parsel 1.5.1, w3lib 1.19.0, Twisted 18.9.0, Python 3.7.0 (default, Jun 28 2018, 07:39:16) - [Clang 4.0.1 (tags/RELEASE_401/final)], pyOpenSSL 18.0.0 (OpenSSL 1.1.0j  20 Nov 2018), cryptography 2.4.2, Platform Darwin-18.2.0-x86_64-i386-64bit
+2019-02-14 11:15:45 [scrapy.crawler] INFO: Overridden settings: {'AUTOTHROTTLE_ENABLED': True, 'BOT_NAME': 'shop', 'CONCURRENT_REQUESTS': 32, 'DOWNLOAD_DELAY': 1, 'LOG_FILE': 'logs/scrapy_2019_2_14.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'shop.spiders', 'SPIDER_MODULES': ['shop.spiders']}
+2019-02-14 11:15:45 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.throttle.AutoThrottle']
+2019-02-14 11:15:48 [py.warnings] WARNING: /Users/zouziwei/python_venv/venv_91gou/lib/python3.7/site-packages/scrapy/utils/deprecate.py:156: ScrapyDeprecationWarning: `scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware` class is deprecated, use `scrapy.downloadermiddlewares.useragent.UserAgentMiddleware` instead
+  ScrapyDeprecationWarning)
+
+2019-02-14 11:15:48 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'shop.middlewares.RotateUserAgentMiddleware',
+ 'shop.middlewares.MyIPCroxyMiddleware',
+ 'shop.middlewares.ShopDownloaderMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'shop.middlewares.SeleniumJDMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-02-14 11:15:48 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-02-14 11:15:48 [scrapy.middleware] INFO: Enabled item pipelines:
+['shop.pipelines.ShopPipeline',
+ 'shop.async_mysqlpipelines.AsyncMysqlPipelines',
+ 'shop.imagepipelines.MyImagesPipeline']
+2019-02-14 11:15:48 [scrapy.core.engine] INFO: Spider opened
+2019-02-14 11:15:48 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2019-02-14 11:15:48 [JD] INFO: Spider opened: JD
+2019-02-14 11:15:52 [scrapy.crawler] INFO: Received SIGINT, shutting down gracefully. Send again to force 
