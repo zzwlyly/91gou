@@ -28,22 +28,6 @@ class Brand(db.Model):
 
 
 # 首页导航分类
-class GoodNav(db.Model):
-    __tablename__ = "good_nav"
-    nid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    parent_id = db.Column(db.Integer)
-    name = db.Column(db.String(64))
-    level = db.Column(db.Integer)  # 1:一级列表，2:二级，3:三级
-    sort = db.Column(db.Integer)  # 排序
-    is_delete = db.Column(db.Integer)  # 0：删除 1：有效
-    create_time = db.Column(db.DateTime, default=datetime.datetime.now())
-    # good_category = db.relationship("GoodCategory", backref="good_nav", lazy="dynamic")
-
-    def __repr__(self):
-        return self.name
-
-
-# 首页导航分类
 class GoodNavigation(db.Model):
     __tablename__ = "good_navigation"
     nid = db.Column(db.Integer, primary_key=True)
@@ -65,7 +49,7 @@ class GoodCategory(db.Model):
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # 外键
     # nid = db.Column(db.Integer)
-    nid = db.Column(db.Integer, db.ForeignKey(GoodNavigation.nid, ondelete="CASCADE"))
+    nid = db.Column(db.Integer, db.ForeignKey(GoodNavigation.nid))
     name = db.Column(db.String(64))
     cate_sort = db.Column(db.Integer)  # 排序
     is_show = db.Column(db.Integer)  # 0：隐藏 1：显示

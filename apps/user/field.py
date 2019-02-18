@@ -28,7 +28,7 @@ class UserMessageFields:
     #     'flag': fields.Integer,  # 0 用户 1 商家
     # }
     address_fields = {
-
+        'aid': fields.Integer,
         'name': fields.String,
         'phone': fields.String,
         'address': fields.String,
@@ -62,10 +62,10 @@ class UserMessageFields:
     }
 
     cart_item_fields = {
-        'cart_id':fields.Integer,
-        'good_id':fields.String,
-        'good_quantity':fields.Integer,
-        'flag':fields.Integer,
+        'cart_id': fields.Integer,
+        'good_id': fields.String,
+        'good_quantity': fields.Integer,
+        'flag': fields.Integer,
         'goods': fields.Nested(OrdersFields.goods_fields)
     }
 

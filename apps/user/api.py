@@ -178,6 +178,12 @@ class RegisterResource(Resource):
 
 
 class AliPayResource(Resource):
+    """
+    买家账号ojxmey1504@sandbox.com
+    登录密码111111
+    支付密码111111
+    """
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('uid', type=str)
@@ -185,6 +191,7 @@ class AliPayResource(Resource):
         # self.parser.add_argument('order_num', type=str)
         # self.parser.add_argument('goods', type=str)
 
+    # TODO 3. 支付界面点击提交订单后，转入到支付宝支付界面
     def post(self):
         data = self.parser.parse_args()
         uid = data.get("uid")
@@ -193,7 +200,6 @@ class AliPayResource(Resource):
 
         money = str(order.real_money)
         # order_num = order.oid
-        # todo 商品信息未添加
         # goods = data.get("goods")
         # 实例化Alipay对象
         alipay = AliPay(
@@ -213,10 +219,11 @@ class AliPayResource(Resource):
         return_url  支付完成之后前端跳转的界面 get请求
         notify_url 支付完成后台回调接口  post请求
         '''
-        # 支付成功后发送post请求，修改订单数据
-        pay_success_url = f'http://127.0.0.1:5000/api/v1/orders/status/?uid={uid}&oid={oid}'
+        # pay_success_url = f'http://127.0.0.1:5000/api/v1/orders/status/?uid={uid}&oid={oid}'
+        # TODO 3.1 支付成功后跳转到前端支付成功页面，然后再请求数据，发送post请求，修改订单数据
+        pay_success_url = f"http://localhost:63343/91gou/main/success.html?oid={oid}"
         order_str = alipay.api_alipay_trade_page_pay(
-            subject='91gou支付',
+            subject=f'91gou商城支付：{oid}',
             out_trade_no=oid,
             total_amount=money,
             return_url=pay_success_url,

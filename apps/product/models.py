@@ -32,7 +32,7 @@ class Goods(db.Model):
     # is_recom = db.Column(db.Integer)
     # is_sale = db.Column(db.Integer)
     # good_status = db.Column(db.Integer)
-    sale_volume = db.Column(db.Integer)
+    sale_volume = db.Column(db.Integer, default=0)
     # sale_time = db.Column(db.DateTime, default=datetime.datetime.now())
     # # 0:删除 1:有效
     # is_delete = db.Column(db.Boolean, default=1)

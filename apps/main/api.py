@@ -51,9 +51,10 @@ class MainCategoryResource(Resource):
 
 class TestMainCategoryResource(Resource):
     '''
-    测试数据 首页商品api
+    首页商品api
     '''
 
+    @cache.cached(7 * 24 * 60 * 60)
     def get(self):
         category = []
         try:

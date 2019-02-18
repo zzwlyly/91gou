@@ -17,6 +17,7 @@ class OrdersFields:
     }
 
     items_fields = {
+        'good_id': fields.String,
         'good_quantity': fields.String,
         'goods': fields.Nested(goods_fields)
     }
@@ -46,3 +47,24 @@ class OrdersFields:
 #         'msg': fields.String(default=RESPONSE_SUCCESS_MSG),
 #         'data': fields.List(fields.Nested(order_fields))
 #     }
+
+class OrderSuccessFields:
+    address_fields = {
+        'aid': fields.Integer,
+        'name': fields.String,
+        'phone': fields.String,
+        'address': fields.String,
+        'detail': fields.String,
+    }
+
+    order_fields = {
+        'oid': fields.Integer,
+        'real_money': fields.Integer,
+        'address': fields.Nested(address_fields)
+    }
+
+    result_fields = {
+        'status': fields.Integer(default=RESPONSE_SUCCESS_STATUS),
+        'msg': fields.String(default=RESPONSE_SUCCESS_MSG),
+        'data': fields.Nested(order_fields)
+    }

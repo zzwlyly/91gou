@@ -52,7 +52,8 @@ class Orders(db.Model):
     pay_time = db.Column(db.DateTime)
     # 0:删除 1:有效
     is_delete = db.Column(db.Integer, default=1)
-    order_item = db.relationship("OrderItem", backref="Orders", lazy="dynamic")
+    order_item = db.relationship("OrderItem", backref="orders", lazy="dynamic")
+    address = db.relationship("Address", backref="orders")
 
 
 # 订单内商品条目表
