@@ -130,11 +130,12 @@ class AddOrderItemGoodsQuantity(Resource):
         order_item = OrderItem.query.filter(OrderItem.uid == uid, OrderItem.oid == oid,
                                             OrderItem.good_id == good_id).first()
         cart_item = CartItem.query.filter(CartItem.uid == uid, OrderItem.good_id == good_id,
-                                          CartItem.flag == 2).first()
+                                          CartItem.flag == 3).first()
         good = Goods.query.filter(Goods.good_id == good_id).first()
         order = Orders.query.filter(Orders.uid == uid, Orders.oid == oid).first()
 
-        if order_item and cart_item:
+        try:
+            # if order_item and cart_item:
             original_price = order_item.good_quantity * good.good_price
             price = good.good_price * int(quantity)
             if original_price > price:
@@ -147,6 +148,8 @@ class AddOrderItemGoodsQuantity(Resource):
             # db.session.commit()
             cart_item.good_quantity = int(quantity)
             db.session.commit()
+        except Exception as e:
+            print(e)
 
 
 class OrderSuccessResource(Resource):

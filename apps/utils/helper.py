@@ -7,7 +7,9 @@ __date__ = "2019/1/24 8:57"
 
 
 def product_code():
+    # data_code = datetime.datetime.now().strftime('%Y%m%d%H%m%S')
     data_code = datetime.datetime.now().strftime('%m%d')
+    print(data_code)
     random_code = random.randint(100000, 999999)
     product = data_code + str(random_code)
     return product
