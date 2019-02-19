@@ -66,11 +66,6 @@ class CartResource(Resource):
                 except Exception as e:
                     print(e)
 
-    '''
-    动态获取购物车中的商品数量
-    并修改表中的商品数量
-    '''
-
 
 # TODO 1.3 删除购物车中的商品
 class CartDeleteResource(Resource):

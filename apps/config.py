@@ -17,6 +17,7 @@ class BaseConfig:
     # 生成访问图片的路径
     UPLOADS_DEFAULT_URL = '/static/upload/'
     BABEL_DEFAULT_LOCALE = 'zh_CN'
+
     CACHE_TYPE = 'redis'
     #   配置session的存储方式
     # 密钥

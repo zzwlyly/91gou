@@ -12,9 +12,9 @@ class MainNavResource(Resource):
     导航api
     '''
 
+    # todo 暂时用flask-cache存储string类型，后面改用Redis选择类型存储
     @cache.cached(7 * 24 * 60 * 60)
     def get(self):
-
         try:
             # nav = GoodNav.query.all()
             nav = GoodNavigation.query.all()
@@ -40,9 +40,6 @@ class MainCategoryResource(Resource):
     def get(self):
         try:
             cates = GoodCategory.query.all()
-
-            # print(cates[0].name, type(cates[0]))
-            # print(dir(cates[0]))
             return to_response_success(data=cates, fields=MainCategoryFields.result_fields)
         except Exception as e:
             print(e)
@@ -70,8 +67,6 @@ class TestMainCategoryResource(Resource):
                     'goods': goods.items,
                 }
                 category.append(data_fields)
-            # print(cates[0].name, type(cates[0]))
-            # print(dir(cates[0]))
             return to_response_success(data=category, fields=TestMainCateFields.result_fields)
         except Exception as e:
             print(e)

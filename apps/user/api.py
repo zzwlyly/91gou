@@ -237,6 +237,7 @@ class AliPayResource(Resource):
 
 
 class InformationUser(Resource):
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('uid', type=int)
@@ -247,6 +248,7 @@ class InformationUser(Resource):
         self.parser.add_argument('telephone', type=str)
         self.parser.add_argument('email', type=str)
 
+    # 个人中心 用户信息修改
     def post(self):
         data = self.parser.parse_args()
         uid = data.get('uid')
@@ -299,6 +301,7 @@ class AddressUser(Resource):
         self.parser.add_argument('detail', type=str)
         self.parser.add_argument('address', type=str)
 
+    # 个人中心 增加地址信息
     def post(self):
         data = self.parser.parse_args()
         uid = data.get('uid')
